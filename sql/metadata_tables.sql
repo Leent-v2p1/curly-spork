@@ -25,3 +25,14 @@ CREATE TABLE IF NOT EXISTS etl_meta.column_mapping (
     updated_at TIMESTAMP
 )
 USING PARQUET;
+
+CREATE TABLE IF NOT EXISTS etl_meta.load_stats (
+    pipeline_id BIGINT,
+    source_table STRING,
+    stage_table STRING,
+    incremental_column STRING,
+    loaded_max_value STRING, -- max loaded value serialized to string
+    loaded_row_count BIGINT,
+    load_finished_at TIMESTAMP
+)
+USING PARQUET;
