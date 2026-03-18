@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<workflow-app name="gp-sc-mod" xmlns="uri:oozie:workflow:0.5"   >
+    <global>
+        <configuration>
+            <property>
+                <name>mapred.job.queue.name</name>
+                <value>${yarnQueue}</value>
+            </property>
+            <property>
+                <name>parentAppPath</name>
+                <value>${wf:appPath()}</value>
+            </property>
+            <property>
+                <name>yarn.resourcemanager.am.max-attempts</name>
+                <value>1</value>
+            </property>
+        </configuration>
+    </global>
+    <start to="gp-sc-mod-properties"/>
+    <action name="gp-sc-mod-properties">
+        <shell xmlns="uri:oozie:shell-action:0.3">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <exec>fill-properties.sh</exec>
+            <argument>${ctl}</argument>
+            <argument>${loading_id}</argument>
+            <argument>${wf_id}</argument>
+            <argument>${loading_start}</argument>
+            <argument>${principal}</argument>
+            <argument>${wf:conf('user.name')}</argument>
+            <argument>${replaceAll(keytabPath, '/keytab/', '')}</argument>
+            <argument>${yarnQueue}</argument>
+            <argument>${wf:conf('customBuildDate')}</argument>
+            <argument>${wf:appPath()}/gp-sc-mod-properties-spark.template</argument>
+            <argument>${wf:appPath()}/gp-sc-mod-properties-system.template</argument>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/fill-properties.sh</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/jars/personalization.jar</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/libs/greenplum-connector-apache-spark-scala_2.12-2.1.3.jar</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/libs/postgresql-42.0.0.jre6.jar</file>
+            <file>${keytabPath}#${replaceAll(keytabPath, '/keytab/', '')}</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/custom-log4j.properties#custom-log4j.properties</file>
+        </shell>
+        <ok to="gp-sc-mod"/>
+        <error to="kill"/>
+    </action>
+    <action name="gp-sc-mod">
+        <shell xmlns="uri:oozie:shell-action:0.3">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <exec>gp-sc-mod-runner.sh</exec>
+            <file>${wf:appPath()}/gp-sc-mod-runner.sh#gp-sc-mod-runner.sh</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/jars/personalization.jar</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/libs/greenplum-connector-apache-spark-scala_2.12-2.1.3.jar</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/libs/postgresql-42.0.0.jre6.jar</file>
+            <file>${keytabPath}#${replaceAll(keytabPath, '/keytab/', '')}</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/custom-log4j.properties#custom-log4j.properties</file>
+            <file>/keytab/${gpKeytab}#${gpKeytab}</file>
+            <file>${wf:appPath()}/${gpJaas}#${gpJaas}</file>
+            <file>${wf:appPath()}/gp-sc-mod-properties-spark.conf#gp-sc-mod-properties-spark.conf</file>
+            <file>${wf:appPath()}/gp-sc-mod-properties-system.conf#gp-sc-mod-properties-system.conf</file>
+            <file>/oozie-app/wf/custom/rb/production/utils/common/scheduler-pool.xml</file>
+            <file>/oozie-app/wf/custom/rb/production/greenplum/greenplum-datamart.jar</file>
+        </shell>
+        <ok to="gp-sc-mod-ctl-stats-publisher-properties"/>
+        <error to="kill"/>
+    </action>
+    <action name="gp-sc-mod-ctl-stats-publisher-properties">
+        <shell xmlns="uri:oozie:shell-action:0.3">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <exec>fill-properties.sh</exec>
+            <argument>${ctl}</argument>
+            <argument>${loading_id}</argument>
+            <argument>${wf_id}</argument>
+            <argument>${loading_start}</argument>
+            <argument>${principal}</argument>
+            <argument>${wf:conf('user.name')}</argument>
+            <argument>${replaceAll(keytabPath, '/keytab/', '')}</argument>
+            <argument>${yarnQueue}</argument>
+            <argument>${wf:conf('customBuildDate')}</argument>
+            <argument>${wf:appPath()}/gp-sc-mod-ctl-stats-pub-prop-spark.template</argument>
+            <argument>${wf:appPath()}/gp-sc-mod-ctl-stats-pub-prop-system.template</argument>
+            <file>/oozie-app/wf/custom/rb/production/utils/common/scheduler-pool.xml</file>
+            <file>/oozie-app/wf/custom/rb/production/greenplum/greenplum-datamart.jar</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/fill-properties.sh</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/jars/personalization.jar</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/libs/greenplum-connector-apache-spark-scala_2.12-2.1.3.jar</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/libs/postgresql-42.0.0.jre6.jar</file>
+            <file>${keytabPath}#${replaceAll(keytabPath, '/keytab/', '')}</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/custom-log4j.properties#custom-log4j.properties</file>
+        </shell>
+        <ok to="gp-sc-mod-ctl-stats-publisher"/>
+        <error to="kill"/>
+    </action>
+    <action name="gp-sc-mod-ctl-stats-publisher">
+        <shell xmlns="uri:oozie:shell-action:0.3">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <exec>gp-sc-mod-ctl-stats-pub-runner.sh</exec>
+            <file>${wf:appPath()}/gp-sc-mod-ctl-stats-pub-runner.sh#gp-sc-mod-ctl-stats-pub-runner.sh</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/jars/personalization.jar</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/libs/greenplum-connector-apache-spark-scala_2.12-2.1.3.jar</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/libs/postgresql-42.0.0.jre6.jar</file>
+            <file>${keytabPath}#${replaceAll(keytabPath, '/keytab/', '')}</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/custom-log4j.properties#custom-log4j.properties</file>
+            <file>${wf:appPath()}/gp-sc-mod-ctl-stats-pub-prop-spark.conf#gp-sc-mod-ctl-stats-pub-prop-spark.conf</file>
+            <file>${wf:appPath()}/gp-sc-mod-ctl-stats-pub-prop-system.conf#gp-sc-mod-ctl-stats-pub-prop-system.conf</file>
+            <file>/oozie-app/wf/custom/rb/production/utils/common/scheduler-pool.xml</file>
+        </shell>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

@@ -1,0 +1,72 @@
+<workflow-app name="create-frodmonitoring-datamarts" xmlns="uri:oozie:workflow:0.4">
+    <global>
+        <configuration>
+            <property>
+                <name>mapred.job.queue.name</name>
+                <value>${yarnQueue}</value>
+            </property>
+        </configuration>
+    </global>
+    <start to="validate-ctl-version"/>
+    <action name="validate-ctl-version">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/utils/common/validate-ctl-version</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="create-frod-client-events"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="create-frod-client-events">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/generated/frod/create-client-events-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="create-frod-client-events">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/generated/frod/create-client-events-wf2</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="validate-ctl-version">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>ru.sberbank.bigdata.cloud.rb.internal.sources.common.service.CtlVersionValidator</main-class>
+            <java-opt>-Dctl.url=${ctl}</java-opt>
+            <java-opt>-Dctl.version.required='${ctlVersionRequired}'</java-opt>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/jars/personalization-java.jar#personalization.jar</file>
+        </java>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="drop-database-tables" cred="howlauth">
+        <spark xmlns="uri:oozie:spark-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <master>yarn-cluster</master>
+            <mode>cluster</mode>
+            <name>Drop database ${databaseName} tables </name>
+            <class>ru.sberbank.bigdata.cloud.rb.internal.sources.common.cleaning.PromEnvironmentCleaner</class>
+            <jar>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/jars/personalization-spark.jar</jar>
+            <spark-opts>
+                --files ${nameNode}/oozie-app/wf/custom/rb/production/utils/common/custom-log4j.properties
+            </spark-opts>
+        </spark>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

@@ -1,0 +1,17 @@
+<workflow-app name="test" xmlns="uri:oozie:workflow:0.4">
+    <start to="validate-ctl-version"/>
+    <action name="validate-ctl-version">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/utils/common/validate-ctl-version</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+
+    <end name="end"/>
+</workflow-app>

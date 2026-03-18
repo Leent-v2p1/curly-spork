@@ -1,0 +1,10 @@
+custom_rb_test:
+  test:
+    type: datamart
+    period: day
+    customJavaOpts:
+      repartition: enabled
+      spark.kryoserializer.buffer.max: 2048m
+    reserving:
+      customJavaOpts:
+        spark.kryoserializer.buffer.max: 1024m

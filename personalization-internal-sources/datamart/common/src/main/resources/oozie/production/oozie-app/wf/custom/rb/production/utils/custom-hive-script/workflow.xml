@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<workflow-app name="run-custom-hive-script" xmlns="uri:oozie:workflow:0.5">
+    <global>
+        <configuration>
+            <property>
+                <name>mapred.job.queue.name</name>
+                <value>${yarnQueue}</value>
+            </property>
+        </configuration>
+    </global>
+    <start to="run-custom-hive-script"/>
+    <action name="run-custom-hive-script" cred="howlauth">
+        <shell xmlns="uri:oozie:shell-action:0.3">
+            <exec>hive-script-runner.sh</exec>
+            <argument>${wf:conf('user.name')}</argument>
+            <argument>${replaceAll(keytabPath, '/keytab/', '')}</argument>
+            <argument>${yarnQueue}</argument>
+            <argument>${principal}</argument>
+            <argument>${hiveMetastoreUri}</argument>
+            <argument>${hiveJdbcUrl}</argument>
+            <argument>${hive_sql}</argument>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/jars/personalization.jar</file>
+            <file>${keytabPath}#${replaceAll(keytabPath, '/keytab/', '')}</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/custom-log4j.properties#custom-log4j.properties</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/custom-hive-script/hive-script-runner.sh</file>
+            <file>/oozie-app/wf/custom/rb/production/utils/common/scheduler-pool.xml</file>
+        </shell>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

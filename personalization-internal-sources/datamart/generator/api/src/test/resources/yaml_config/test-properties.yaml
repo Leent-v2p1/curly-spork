@@ -1,0 +1,4 @@
+custom_rb_test:
+  test:
+    type: datamart
+    period: day

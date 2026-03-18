@@ -1,0 +1,135 @@
+{
+  "appConfig": {
+    "stages": {
+      "rollBack": {
+        "enabled": "false"
+      },
+      "CdcCalc": {
+        "enabled": "false"
+      },
+      "kafka2hdfs": {
+        "enabled": "false"
+      },
+      "PreStage": {
+        "enabled": "true"
+      },
+      "historisity": {
+        "enabled": "false"
+      },
+      "dataQualityCheck":{
+        "enabled": "false"
+      },
+      "coalesceFiles": {
+        "enabled": "false"
+      },
+      "backUp": {
+        "enabled": "false"
+      },
+      "moveTable": {
+        "enabled": "false"
+      },
+      "hdfs2kafka": {
+        "enabled": "false"
+      }
+    }
+  },
+  "treadConfigs": [
+    {
+      "name": "ref_product_class",
+      "stages": [
+        {
+          "name": "PreStage",
+          "enabled": "true",
+          "config": {
+            "filePath": "hdfs:///oozie-app/b2c/b2c_infra/custom_rb_vnv/etl/workflows/ref_product_class/dml/threads/ref_product_class_thread/ref_product_class_thread.sql"
+          }
+        },
+        {
+          "name": "coalesceFiles",
+          "enabled": "false",
+          "config": {
+            "hdfsPaths": "/data/custom/rb/vnv/stg/ref_product_class_stg",
+            "hdfsWorkPath": "/data/custom/rb/vnv/stg/temp",
+            "minFileSizeMB": 128,
+            "compressionType": "snappy",
+            "parallelDegree": "1"
+          }
+        },
+        {
+          "name": "backUp",
+          "enabled": "false",
+          "config": {
+            "targetTableName": "ref_product_class",
+            "backupSchema": "bkp"
+          }
+        },
+        {
+          "name": "moveTable",
+          "publishStats": [
+            {
+              "entityId": "901411024",
+              "statId": "2",
+              "statValue": "true",
+              "statValueType": "constant"
+            },
+            {
+              "entityId": "901411024",
+              "statId": "34",
+              "statValue": "typeWf",
+              "statValueType": "variable"
+            },
+            {
+              "entityId": "901411024",
+              "statId": "5",
+              "statValue": "businessDate",
+              "statValueType": "variable"
+            },
+            {
+              "entityId": "901411024",
+              "statId": "10",
+              "statValue": "ctlLoading",
+              "statValueType": "variable"
+            },
+            {
+              "entityId": "901411024",
+              "statId": "11",
+              "statValue": "lastLoadedTime",
+              "statValueType": "variable"
+            }
+          ],
+          "enabled": "false",
+          "config": {
+            "s2tTableList": "ref_product_class_stg->ref_product_class",
+            "srcSchema": "custom_rb_vnv_stg",
+            "tgtSchema": "custom_rb_vnv",
+            "compressionType": "snappy",
+            "workMode": "arc",
+            "truncateFilterList": "",
+            "truncateArcList": "ref_product_class->all",
+            "truncateIncFilterList": "",
+            "instanceFilter": "",
+            "truncateStgFromPa": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "trunc_ref_product_class_hdp",
+      "stages": [
+        {
+          "name": "PreStage",
+          "enabled": "true",
+          "config": {
+            "filePath": "hdfs:///oozie-app/b2c/b2c_infra/custom_rb_vnv/etl/workflows/ref_product_class/dml/threads/trunc_ref_product_class_hdp/trunc_ref_product_class_hdp.sql"
+          }
+        }
+      ]
+    }
+  ],
+  "treadRelations": [
+    {
+      "from": "ref_product_class",
+      "to": "trunc_ref_product_class_hdp"
+    }
+  ]
+}

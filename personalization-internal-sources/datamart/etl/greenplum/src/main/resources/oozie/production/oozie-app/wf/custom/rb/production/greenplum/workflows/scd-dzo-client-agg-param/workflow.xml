@@ -1,0 +1,36 @@
+<workflow-app name="masspers-dzo-client-agg-param-daily-datamart" xmlns="uri:oozie:workflow:0.4">
+    <global>
+        <configuration>
+            <property>
+                <name>mapred.job.queue.name</name>
+                <value>${yarnQueue}</value>
+            </property>
+        </configuration>
+    </global>
+
+    <start to="validate-ctl-version"/>
+
+    <action name="validate-ctl-version">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/utils/common/validate-ctl-version</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="create-dzo-client-agg-param-daily"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="create-dzo-client-agg-param-daily">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/greenplum/generated/create-scd-dzo-client-agg-param-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+
+    <end name="end"/>
+</workflow-app>

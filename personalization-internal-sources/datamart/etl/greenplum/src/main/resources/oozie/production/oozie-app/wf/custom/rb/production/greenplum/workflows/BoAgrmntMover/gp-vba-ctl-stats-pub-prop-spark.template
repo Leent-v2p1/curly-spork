@@ -1,0 +1,13 @@
+# Generated parameters
+executorMemory=2G
+executorCoreNum=1
+executors=2
+driverMemory=2G
+# Parameters from ctl
+principal=$[principal]
+keytabPath=$[keytabPath]
+queue=$[yarnQueue]
+metastore_uri=$[hiveMetastoreUri]
+user_name=$[user.name]
+# Additional ctl execution parameters
+[ctlExecutionConf]

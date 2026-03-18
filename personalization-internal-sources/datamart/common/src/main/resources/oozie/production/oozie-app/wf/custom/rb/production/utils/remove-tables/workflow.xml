@@ -1,0 +1,37 @@
+<workflow-app name="run-remove-tables" xmlns="uri:oozie:workflow:0.4">
+    <credentials>
+        <credential name='howlauth' type='hcat'>
+            <property>
+                <name>hcat.metastore.uri</name>
+                <value>${hiveMetastoreUri}</value>
+            </property>
+            <property>
+                <name>hcat.metastore.principal</name>
+                <value>${principal}</value>
+            </property>
+        </credential>
+    </credentials>
+    <start to="run-remove-tables"/>
+    <action name="run-remove-tables">
+        <shell xmlns="uri:oozie:shell-action:0.3">
+            <exec>remove-tables-runner.sh</exec>
+            <argument>${wf:conf('user.name')}</argument>
+            <argument>${replaceAll(keytabPath, '/keytab/', '')}</argument>
+            <argument>${yarnQueue}</argument>
+            <argument>${principal}</argument>
+            <argument>${hiveMetastoreUri}</argument>
+            <argument>${hiveJdbcUrl}</argument>
+            <argument>${tablesToDrop}</argument>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/jars/personalization.jar</file>
+            <file>${keytabPath}#${replaceAll(keytabPath, '/keytab/', '')}</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/custom-log4j.properties#custom-log4j.properties</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/remove-tables/remove-tables-runner.sh</file>
+        </shell>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

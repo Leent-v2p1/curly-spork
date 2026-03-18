@@ -1,0 +1,18 @@
+[
+  {
+    "name": "DHP2 Personalization internal",
+    "catId": 1369,
+    "id": 1369,
+    "parentId": 0,
+    "action": "",
+    "deleted": false
+  },
+  {
+    "name": "Personalization internal integration",
+    "catId": 50,
+    "id": 50,
+    "parentId": 0,
+    "action": "",
+    "deleted": false
+  }
+]

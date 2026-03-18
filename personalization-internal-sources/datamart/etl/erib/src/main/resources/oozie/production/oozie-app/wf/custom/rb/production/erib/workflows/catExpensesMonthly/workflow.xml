@@ -1,0 +1,35 @@
+<workflow-app name="masspers-prod-erib-${instanceName}-cat-expenses-monthly-datamarts" xmlns="uri:oozie:workflow:0.4">
+    <global>
+        <configuration>
+            <property>
+                <name>mapred.job.queue.name</name>
+                <value>${yarnQueue}</value>
+            </property>
+        </configuration>
+    </global>
+
+    <start to="erib-sbol-cat-expenses"/>
+
+    <action name="erib-sbol-cat-expenses">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-cat-expenses-${instanceName}-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="erib-instance-view-creator">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-erib-instance-view-creator-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

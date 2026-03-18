@@ -1,0 +1,44 @@
+<workflow-app name="masspers-prod-erib-logon-aggr-monthly-datamarts" xmlns="uri:oozie:workflow:0.4">
+    <global>
+        <configuration>
+            <property>
+                <name>mapred.job.queue.name</name>
+                <value>${yarnQueue}</value>
+            </property>
+        </configuration>
+    </global>
+
+    <start to="validate-ctl-version"/>
+
+    <action name="validate-ctl-version">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/utils/common/validate-ctl-version</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="create-sbol-logon-aggr"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="create-sbol-logon-aggr">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-logon-aggr-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="create-sbol-logon-aggr-for-mega"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="create-sbol-logon-aggr-for-mega">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-logon-aggr-for-mega-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

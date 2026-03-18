@@ -1,0 +1,160 @@
+vars: &defaultMartVars
+  name: custom_rb_evk
+  cluster_name: "{{global.CTL_PROFILE_NAME}}"
+  name_official: "CI03472534"
+  hdfs_path_block: "/data/custom/{{devops.block}}"
+  hdfs_path_datamart: "{{hdfs_path_block}}/{{name}}"
+  hdfs_path_datamart_full: "hdfs://{{hdfs_path_datamart}}"
+  hdfs_path_app_full: "hdfs://{{devops.datamart_path_app}}"
+  notifications_emails: "SAShustova@sberbank.ru"
+  ###############################
+  # Workflows ###################
+  wf_prefix: "masspers-{{cluster_name}}"
+  wf_postfix: "datamarts"
+  upload_cs_data_max_duration: 10
+  ###############################
+  # SPARK CONF ##################
+  spark_executor_extraJavaOptions: >-
+    -XX:+UseCompressedOops -XX:+UseG1GC -XX:+UseNUMA -Dlog4j2.configurationFile=log4j2.xml
+  spark_driver_extraJavaOptions: >-
+    -XX:+UseCompressedOops -Dlog4j2.configurationFile=log4j2.xml
+  #can be cluster or client
+  sber_sql_spark_deploy: cluster
+  spark_submit_cmd_main: >-
+    --conf spark.submit.deployMode=${b2c.sql.engine.spark.deploy}
+    --conf spark.master=yarn
+    --conf spark.yarn.maxAppAttempts=1
+    --conf spark.port.maxRetries=50
+    --conf spark.network.timeout=600s
+    --conf spark.serializer=org.apache.spark.serializer.KryoSerializer
+    --conf spark.kryoserializer.buffer.max=128M
+    --conf spark.debug.maxToStringFields=100
+    --conf spark.dynamicAllocation.enabled=true
+    --conf spark.dynamicAllocation.shuffleTracking.enabled=true
+    --conf spark.shuffle.service.enabled=true
+    --conf spark.hadoop.hive.exec.dynamic.partition=true
+    --conf spark.hadoop.hive.exec.dynamic.partition.mode=nonstrict
+    --conf spark.hadoop.mapreduce.input.fileinputformat.input.dir.recursive=true
+    --conf spark.sql.broadcastTimeout=6000
+    --conf spark.sql.catalogImplementation=hive
+    --conf spark.sql.inMemoryColumnarStorage.compressed=true
+    --conf spark.sql.hive.convertMetastoreParquet=false
+    --conf spark.sql.hive.manageFilesourcePartitions=false
+    --conf spark.sql.mapKeyDedupPolicy=LAST_WIN
+  spark_submit_cmd_low: >-
+    --conf spark.sql.shuffle.partitions=80
+    --conf spark.driver.memory=1G
+    --conf spark.driver.cores=1
+    --conf spark.dynamicAllocation.minExecutors=0
+    --conf spark.dynamicAllocation.maxExecutors=1
+    --conf spark.executor.memory=1G
+    --conf spark.executor.cores=1
+  spark_submit_cmd_mid: >-
+    --conf spark.sql.shuffle.partitions=80
+    --conf spark.driver.memory=2G
+    --conf spark.driver.cores=1
+    --conf spark.dynamicAllocation.minExecutors=0
+    --conf spark.dynamicAllocation.maxExecutors=2
+    --conf spark.executor.memory=2G
+    --conf spark.executor.cores=2
+  spark_submit_cmd_high: >-
+    --conf spark.sql.shuffle.partitions=120
+    --conf spark.driver.memory=2G
+    --conf spark.driver.cores=1
+    --conf spark.dynamicAllocation.minExecutors=0
+    --conf spark.dynamicAllocation.maxExecutors=8
+    --conf spark.executor.memory=2G
+    --conf spark.executor.cores=2
+  spark_submit_cmd_super_high: >-
+    --conf spark.sql.shuffle.partitions=120
+    --conf spark.driver.memory=8G
+    --conf spark.driver.cores=4
+    --conf spark.dynamicAllocation.minExecutors=0
+    --conf spark.dynamicAllocation.maxExecutors=16
+    --conf spark.executor.memory=4G
+    --conf spark.executor.cores=4
+
+  sber_sql_version: "D-01.010.08"
+  kibana_app_id: "GP_MARTS-CI02320571-CI02364774-202507281531441966"
+
+stands:
+
+  - stand_inventory: devsklsdprozn
+    vars:
+      <<: *defaultMartVars
+      YARN_QUEUE: "default"
+      USER_NAME: "u_sklsdprozn_s_custom_rb_evk"
+      secman_conf_hdfs_path: "hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/conf/secman/secman.conf"
+      secman_passphrase: "b2c_infra" #3
+      secman_email: "support_b2c-sql@sberbank.ru"
+      secman_common_name: "CI02429684-DEV-u_sklsdprozn_s_custom_rb_evk" #4
+      secman_path: "/v1/A/CI05152047/JEN/SD/SBERCA/sberca-test-ext-g2/fetch/client_3y_AS_rsa" #5
+      appender_url: "https://tvlss-log000001.dev.df.sbrf.ru:44443" #6
+      appender_passphrase: "l5rvlbA5SMM4qQn/5QqWDg==:0GrzGh/uWcqM3AGV5Eum7g==" #7
+      src_schema_name: custom_rb_greenplum_stg
+      need_trunc_source: y
+      is_dev: y
+
+  - stand_inventory: itsklsdprozn
+    vars:
+      <<: *defaultMartVars
+      YARN_QUEUE: "default"
+      USER_NAME: "u_itsklsdprozn_s_custom_rb_evk"
+      secman_conf_hdfs_path: "hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/conf/secman/secman.conf"
+      secman_passphrase: "b2c_infra" #3
+      secman_email: "support_b2c-sql@sberbank.ru"
+      secman_common_name: "CI02368213-IFT-u_itsklsdprozn_s_custom_rb_evk" #4
+      secman_path: "/v1/A/CI05152047/JEN/SD/SBERCA/sberca-test-ext-g2/fetch/client_3y_AS_rsa" #5
+      appender_url: "https://tvlss-log000001.dev.df.sbrf.ru:44443" #6
+      appender_passphrase: "b2c_infra" #7
+      src_schema_name: custom_rb_greenplum_stg
+      need_trunc_source: y
+      is_dev: y
+
+  - stand_inventory: utarnsdprozn
+    vars:
+      <<: *defaultMartVars
+      YARN_QUEUE: "hdp2"
+      USER_NAME: "u_utarnsdprozn_s_custom_rb_evk"
+      secman_conf_hdfs_path: "hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/conf/secman/secman.conf"
+      secman_passphrase: "b2c_infra" #3
+      secman_email: "support_b2c-sql@sberbank.ru"
+      secman_common_name: "CI06077265-RDT-u_utarnsdprozn_s_custom_rb_evk" #4
+      secman_path: "/v1/A/CI05152047/JEN/SD/SBERCA/sberca-int/fetch/client_3y_AS_rsa" #5
+      appender_url: "https://pvlas-log000214.log.df.sbrf.ru:44443" #6
+      appender_passphrase: "b2c_infra" #7
+      src_schema_name: arnsdprozn_custom_rb_greenplum_stg
+      need_trunc_source: n
+      is_dev: n
+
+  - stand_inventory: atdisdprozn
+    vars:
+      <<: *defaultMartVars
+      YARN_QUEUE: "default"
+      USER_NAME: "u_atdisdprozn_s_custom_rb_evk"
+      secman_conf_hdfs_path: "hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/conf/secman/secman.conf"
+      secman_passphrase: "b2c_infra" #3
+      secman_email: "support_b2c-sql@sberbank.ru"
+      secman_common_name: "CI02368198-PSI-u_atdisdprozn_s_custom_rb_evk" #4
+      secman_path: "/v1/A/CI05152047/JEN/SD/SBERCA/sberca-test-int-g2/fetch/client_3y_AS_rsa" #5
+      appender_url: "https://restlogs.psidf.sbrf.ru:44443" #6
+      appender_passphrase: "b2c_infra" #7
+      src_schema_name: custom_rb_greenplum_stg
+      need_trunc_source: y
+      is_dev: n
+
+  - stand_inventory: arnsdprozn
+    vars:
+      <<: *defaultMartVars
+      YARN_QUEUE: "n_hdp2_custom_rb_greenplum"
+      USER_NAME: "u_arnsdprozn_s_custom_rb_evk"
+      secman_conf_hdfs_path: "hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/conf/secman/secman.conf"
+      secman_passphrase: "b2c_infra" #3
+      secman_email: "support_b2c-sql@sberbank.ru"
+      secman_common_name: "CI02368211-PROM-u_arnsdprozn_s_custom_rb_evk" #4
+      secman_path: "/v1/A/CI05152047/JEN/SD/SBERCA/sberca-int/fetch/client_3y_AS_rsa" #5
+      appender_url: "https://restlogs.ca.sbrf.ru:44443" #6
+      appender_passphrase: "b2c_infra" #7
+      src_schema_name: custom_rb_greenplum_stg
+      need_trunc_source: y
+      is_dev: n

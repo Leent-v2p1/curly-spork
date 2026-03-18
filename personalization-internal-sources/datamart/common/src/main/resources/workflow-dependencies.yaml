@@ -1,0 +1,4494 @@
+### WAY4 ###
+- name: way4-card-agrmnt-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          #WAY4
+          - 3110006
+          - 3110080
+          - 3110019
+          - 3110028
+          - 3110055
+#    checks:
+#      - entityId: 901021101
+#        type: READ
+#      - entityId: 901021101
+#        type: WRITE
+#        profile: clsklod ###if profile is not set it would choose default profile from devops pipeline
+#    sets:
+#      - entityId: 901021101
+#        type: READ
+#        estimate: 500
+
+- name: way4-card-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.card_agrmnt
+
+- name: way4-currency-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          #WAY4
+          - 3110065
+
+- name: way4-dm-pymnt-option-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          #WAY4 FORM9
+          - 243110003
+
+- name: way4-txn-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.merchants_way_pprb
+          - custom_rb_card.card
+    replicas:
+      - statId: 2
+        profile: arnsdpopt
+        entities:
+          - 810110003
+
+- name: way4-txn-upd-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.card
+    replicas:
+      - statId: 2
+        profile: clsklopt
+        entities:
+          - 810110003
+
+- name: way4-dm-acct-state-monthly
+  dependencies:
+    # Start every 4 day of month at 0:00
+    cron: "0 19 3 * *"
+
+- name: way4-txn-monthly
+  dependencies:
+    # Start every fourth day of month at 14:00
+    cron: "0 15 4 * *"
+
+- name: way4-card-agrmnt-monthly
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 6
+        entities:
+          # 5-th day of month
+          # FOR AGRMNT_MNTH
+          - custom_rb_card.txn_mnth
+
+- name: way4-nsi
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        entities:
+          - 118100651
+          - 118100653
+          - 118100646
+          - 118100645
+          - 118100654
+          - 118100652
+          - 118100647
+          - 118100649
+
+- name: way4-merchants
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: arnsdpopt
+        entities:
+          - 810110003
+
+- name: way4-merchants-pprb
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 4 * * *"
+
+- name: way4-cred-limit-hist-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 3110006
+      - statId: 1
+        profile: sklsdpetl4hdp
+        entities:
+          - 243110004
+
+- name: way4-gl-trace-rb
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 3110085
+
+- name: way4-scd-card-pprb
+  dependencies:
+    # Start every day at 7:30
+    cron: "30 7 * * *"
+
+- name: way4-scd-card-repl-pprb
+  dependencies:
+    cron: "0 4 * * *"
+
+- name: way4-ft-txn-pprb-repl
+  dependencies:
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901021033
+
+- name: way4-ref-card-first-transact
+  dependencies:
+    cron: "0 20 * * *"
+
+- name: way4-scd-card-agrmnt-pprb
+  dependencies:
+    # Start every day at 7:00
+    cron: "0 7 * * *"
+
+- name: way4-ft-txn-det-union
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901021039
+
+- name: way4-merchants-way-pprb
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901021041
+
+- name: way4-merchants-way-full
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: arnsdpopt
+        entities:
+          - 810110003
+
+- name: way4-scd-card-union
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901021038
+
+- name: way4-txn-union-monthly
+  dependencies:
+    cron: "0 19 3 * *"
+
+- name: way4-scd-card-agrmnt-union
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901021040
+
+- name: way4-scd-card-agrmnt-repl-pprb
+  dependencies:
+    cron: "0 7 * * *"
+
+- name: way4-dim-promo-package
+  dependencies:
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: arnsdpstork2ns2
+        entities:
+          - 112110132
+          - 112110177
+          - 112110176
+          - 112110013
+  eventAwaitStrategy: or
+
+- name: way4-dim-promo-tariff-overrides
+  dependencies:
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: arnsdpstork2ns2
+        entities:
+          - 112110179
+          - 112110110
+  eventAwaitStrategy: or
+
+- name: way4-dim-promo-participation-limits
+  dependencies:
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: arnsdpstork2ns2
+        entities:
+          - 112110178
+          - 112110110
+          - 112110171
+  eventAwaitStrategy: or
+
+- name: way4-dim-merchants
+  dependencies:
+    cron: "0 2 * * *"
+
+### EKP ###
+- name: ekp-loan-agrmnt-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 211
+        profile: sklsdppprb2
+        entities:
+          #EKP
+          - 52290139 #RU_SBER_CB_EKP_APPLOG_Z_PR_CRED
+          - 52290073 #RU_SBER_CB_EKP_APPLOG_Z_FACT_OPER
+          - 52290002 #RU_SBER_CB_EKP_APPLOG_Z_PART_TO_LOAN
+          - 52290422 #RU_SBER_CB_EKP_APPLOG_Z_PRC_SCHEME
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_loan.loan_product
+          - custom_rb_loan.recount_ekp
+
+- name: ekp-agrmnt-bal-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_loan.loan_agrmnt
+    replicas:
+      - statId: 15
+        profile: arnsdprozn
+        entities:
+          - 906021054
+
+- name: ekp-loan-moved-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_loan.oper
+          - custom_rb_cod.dep_agrmnt_txn_det_13
+          - custom_rb_cod.dep_agrmnt_txn_det_16
+          - custom_rb_cod.dep_agrmnt_txn_det_18
+          - custom_rb_cod.dep_agrmnt_txn_det_38
+          - custom_rb_cod.dep_agrmnt_txn_det_40
+          - custom_rb_cod.dep_agrmnt_txn_det_42
+          - custom_rb_cod.dep_agrmnt_txn_det_44
+          - custom_rb_cod.dep_agrmnt_txn_det_52
+          - custom_rb_cod.dep_agrmnt_txn_det_54
+          - custom_rb_cod.dep_agrmnt_txn_det_55
+          - custom_rb_cod.dep_agrmnt_txn_det_70
+    replicas:
+      - statId: 12
+        profile: arnsdpstork2ns2
+        entities:
+          #EKP
+          - 4110144
+
+- name: ekp-currency-rate-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 211
+        profile: sklsdppprb2
+        entities:
+          - 52290328 #RU_SBER_CB_EKP_APPLOG_Z_RECONT
+
+- name: ekp-oper-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_loan.loan_agrmnt
+          - custom_rb_loan.recount_ekp
+
+- name: ekp-oper-upd-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_loan.loan_agrmnt
+          - custom_rb_loan.recount_ekp
+
+- name: ekp-loan-product-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 211
+        profile: sklsdppprb2
+        entities:
+          - 52290344 #RU_SBER_CB_EKP_APPLOG_Z_PRODUCT
+      - statId: 211
+        profile: sklsdppprb2
+        entities:
+          - 52290436 #RU_SBER_CB_EKP_APPLOG_Z_KIND_CREDITS
+
+- name: ekp-cred-deposit-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 1110014
+
+- name: ekp-additional-epk-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+
+- name: ekp-test-replica-recovery
+  dependencies:
+    cron: "* * * * *"
+
+### /EKP ###
+
+### ERIB SBOL ###
+- name: erib-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_sbol.fund_sender_responses_ikfl
+          - custom_rb_sbol.fund_sender_responses_ikfl2
+          - custom_rb_sbol.fund_sender_responses_ikfl3
+          - custom_rb_sbol.fund_sender_responses_ikfl4
+          - custom_rb_sbol.fund_sender_responses_ikfl5
+          - custom_rb_sbol.fund_sender_responses_ikfl_gf
+          - custom_rb_sbol.fund_sender_responses_ikfl6
+          - custom_rb_sbol.fund_sender_responses_ikfl7
+          - custom_rb_sbol.sbol_device_ikfl
+          - custom_rb_sbol.sbol_device_ikfl2
+          - custom_rb_sbol.sbol_device_ikfl3
+          - custom_rb_sbol.sbol_device_ikfl4
+          - custom_rb_sbol.sbol_device_ikfl5
+          - custom_rb_sbol.sbol_device_ikfl_gf
+          - custom_rb_sbol.sbol_device_ikfl6
+          - custom_rb_sbol.sbol_device_ikfl7
+
+- name: erib-oper-hist-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_sbol.sbol_oper_ikfl
+          - custom_rb_sbol.sbol_oper_ikfl2
+          - custom_rb_sbol.sbol_oper_ikfl3
+          - custom_rb_sbol.sbol_oper_ikfl4
+          - custom_rb_sbol.sbol_oper_ikfl5
+          - custom_rb_sbol.sbol_oper_ikfl_gf
+          - custom_rb_sbol.sbol_oper_ikfl6
+          - custom_rb_sbol.sbol_oper_ikfl7
+
+- name: erib-ikfl-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410004
+
+- name: erib-ikfl2-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410039
+
+- name: erib-ikfl3-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410074
+
+- name: erib-ikfl4-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410148
+
+- name: erib-ikfl5-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410198
+
+- name: erib-ikfl_gf-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410109
+
+- name: erib-ikfl6-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410604
+
+- name: erib-ikfl7-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410697
+
+- name: erib-ikfl-logon-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410021
+    datamarts:
+      - statId: 1
+        entities:
+          - custom_rb_sbol.sbol_logon_launcher
+
+- name: erib-ikfl2-logon-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410056
+    datamarts:
+      - statId: 1
+        entities:
+          - custom_rb_sbol.sbol_logon_launcher
+
+- name: erib-ikfl3-logon-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410091
+    datamarts:
+      - statId: 1
+        entities:
+          - custom_rb_sbol.sbol_logon_launcher
+
+- name: erib-ikfl4-logon-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410165
+    datamarts:
+      - statId: 1
+        entities:
+          - custom_rb_sbol.sbol_logon_launcher
+
+- name: erib-ikfl5-logon-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410215
+    datamarts:
+      - statId: 1
+        entities:
+          - custom_rb_sbol.sbol_logon_launcher
+
+- name: erib-ikfl_gf-logon-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410126
+    datamarts:
+      - statId: 1
+        entities:
+          - custom_rb_sbol.sbol_logon_launcher
+
+- name: erib-ikfl6-logon-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410610
+    datamarts:
+      - statId: 1
+        entities:
+          - custom_rb_sbol.sbol_logon_launcher
+
+- name: erib-ikfl7-logon-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410703
+    datamarts:
+      - statId: 1
+        entities:
+          - custom_rb_sbol.sbol_logon_launcher
+
+- name: erib-sbol-connectors
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 161110002
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.scd_card_union
+
+- name: erib-sbol-logon-launcher
+  dependencies:
+    cron: "0 4 * * *"
+
+- name: erib-ikfl-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410026
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl2-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410061
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl3-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410096
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl4-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410170
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl5-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410220
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl6-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410614
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl7-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410707
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl_gf-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410131
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl-oper-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410003
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl2-oper-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410038
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl3-oper-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410073
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl4-oper-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410147
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl5-oper-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410197
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl6-oper-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410603
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl7-oper-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410696
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl_gf-oper-ahd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_sbol.sbol_logon_for_ahd_ikfl_gf
+  parameters:
+    startDt: 2020-01-01
+
+- name: erib-ikfl-oper
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410003
+
+- name: erib-ikfl2-oper
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410038
+
+- name: erib-ikfl3-oper
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410073
+
+- name: erib-ikfl4-oper
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410147
+
+- name: erib-ikfl5-oper
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410197
+
+- name: erib-ikfl6-oper
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410603
+
+- name: erib-ikfl7-oper
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410696
+
+- name: erib-ikfl_gf-oper
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410108
+
+- name: erib-ikfl-oper-upd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410003
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.scd_card_union
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+
+- name: erib-ikfl2-oper-upd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410038
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.scd_card_union
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+
+- name: erib-ikfl3-oper-upd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410073
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.scd_card_union
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+
+- name: erib-ikfl4-oper-upd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410147
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.scd_card_union
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+
+- name: erib-ikfl5-oper-upd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410197
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.scd_card_union
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+
+- name: erib-ikfl6-oper-upd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410603
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.scd_card_union
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+
+- name: erib-ikfl7-oper-upd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410696
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.scd_card_union
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+
+- name: erib-ikfl_gf-oper-upd
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410108
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.scd_card_union
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+
+- name: erib-oper-aggr-monthly
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 19 3 * *"
+    datamarts:
+      - statId: 6
+        entities:
+          # 2-nd day of month
+          # FOR SBOL_OPER_AGGR
+          - custom_rb_sbol.sbol_oper_ikfl
+          - custom_rb_sbol.sbol_oper_ikfl2
+          - custom_rb_sbol.sbol_oper_ikfl3
+          - custom_rb_sbol.sbol_oper_ikfl4
+          - custom_rb_sbol.sbol_oper_ikfl5
+          - custom_rb_sbol.sbol_oper_ikfl6
+          - custom_rb_sbol.sbol_oper_ikfl7
+          - custom_rb_sbol.sbol_oper_ikfl_gf
+
+- name: erib-logon-aggr-monthly
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 19 3 * *"
+    datamarts:
+      - statId: 6
+        entities:
+          # 2-nd day of month
+          # FOR SBOL_LOGON_AGGR
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl2
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl3
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl4
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl5
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl6
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl7
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl_gf
+
+- name: erib-logon-hist-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl2
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl3
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl4
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl5
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl6
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl7
+          - custom_rb_sbol.sbol_logon_aggr_dt_ikfl_gf
+
+- name: erib-ikfl_gf-after-aggr-fund-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_sbol.aggr_fund_sender_responses
+
+- name: erib-ikfl-after-aggr-fund-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_sbol.aggr_fund_sender_responses
+
+- name: erib-ikfl2-after-aggr-fund-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_sbol.aggr_fund_sender_responses
+
+- name: erib-ikfl3-after-aggr-fund-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_sbol.aggr_fund_sender_responses
+
+- name: erib-ikfl4-after-aggr-fund-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_sbol.aggr_fund_sender_responses
+
+- name: erib-ikfl5-after-aggr-fund-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_sbol.aggr_fund_sender_responses
+
+- name: erib-ikfl6-after-aggr-fund-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_sbol.aggr_fund_sender_responses
+
+- name: erib-ikfl7-after-aggr-fund-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_sbol.aggr_fund_sender_responses
+
+- name: erib-ikfl-cat-expenses-monthly
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 6
+        entities:
+          # 7-th day of month
+          - custom_rb_sbol.sbol_cat_detailed_transactions_ikfl
+
+- name: erib-ikfl2-cat-expenses-monthly
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 6
+        entities:
+          # 7-th day of month
+          - custom_rb_sbol.sbol_cat_detailed_transactions_ikfl2
+
+- name: erib-ikfl3-cat-expenses-monthly
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 6
+        entities:
+          # 7-th day of month
+          - custom_rb_sbol.sbol_cat_detailed_transactions_ikfl3
+
+- name: erib-ikfl4-cat-expenses-monthly
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 6
+        entities:
+          # 7-th day of month
+          - custom_rb_sbol.sbol_cat_detailed_transactions_ikfl4
+
+- name: erib-ikfl5-cat-expenses-monthly
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 6
+        entities:
+          # 7-th day of month
+          - custom_rb_sbol.sbol_cat_detailed_transactions_ikfl5
+
+- name: erib-ikfl_gf-cat-expenses-monthly
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 6
+        entities:
+          # 7-th day of month
+          - custom_rb_sbol.sbol_cat_detailed_transactions_ikfl_gf
+
+- name: erib-ikfl6-cat-expenses-monthly
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 6
+        entities:
+          # 7-th day of month
+          - custom_rb_sbol.sbol_cat_detailed_transactions_ikfl6
+
+- name: erib-ikfl7-cat-expenses-monthly
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 6
+        entities:
+          # 7-th day of month
+          - custom_rb_sbol.sbol_cat_detailed_transactions_ikfl7
+
+- name: erib-ikfl-form-type
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410027
+
+- name: erib-ikfl2-form-type
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410062
+
+- name: erib-ikfl3-form-type
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410097
+
+- name: erib-ikfl_gf-form-type
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410132
+
+- name: erib-ikfl4-form-type
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410171
+
+- name: erib-ikfl5-form-type
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410221
+
+- name: erib-ikfl6-form-type
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410615
+
+- name: erib-ikfl7-form-type
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410708
+
+
+- name: erib-account-links
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 34410001
+
+- name: erib-ikfl-sav-goal
+  dependencies:
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410003
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+    cron: "* * * * *"
+
+- name: erib-ikfl2-sav-goal
+  dependencies:
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410038
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+    cron: "* * * * *"
+
+- name: erib-ikfl3-sav-goal
+  dependencies:
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410073
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+    cron: "* * * * *"
+
+- name: erib-ikfl4-sav-goal
+  dependencies:
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410147
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+    cron: "* * * * *"
+
+- name: erib-ikfl5-sav-goal
+  dependencies:
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410197
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+    cron: "* * * * *"
+
+- name: erib-ikfl6-sav-goal
+  dependencies:
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410603
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+    cron: "* * * * *"
+
+- name: erib-ikfl7-sav-goal
+  dependencies:
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410696
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+    cron: "* * * * *"
+
+- name: erib-ikfl_gf-sav-goal
+  dependencies:
+    replicas:
+      - statId: 12
+        profile: sklsdpetl4hdp
+        entities:
+          - 34410108
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_cod.dep_agrmnt_70
+    cron: "* * * * *"
+
+### /ERIB /SBOL ###
+
+### SMARTVISTA ###
+- name: smartvista-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: arnsdpstork2ns1
+        entities:
+          - 73110011
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.scd_card_union
+
+- name: smartvista-archive
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+
+- name: smartvista-tps-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        profile: arnsdpopt2
+        entities:
+          - 810110038
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.scd_card_union
+
+- name: smartvista-nrt-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: clsklod
+        entities:
+          - 530001
+  parameters:
+    skipIfBuiltToday: false
+
+- name: smartvista-agg-nonclients
+  dependencies:
+    # Start every first day of month at 12:00
+    cron: "0 12 1 * *"
+
+- name: smartvista-agg-nonclients-prior-kafka
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_smartvista.aggr_txn_nonclients_1mnf
+
+### /SMARTVISTA ###
+
+### COD ###
+- name: cod-nsi
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 22 * * *"
+
+- name: cod-13-stage-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_13
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901160002 #custom_rb_epk_r2.epk_lnk_host_id
+- name: cod-16-stage-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_16
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901160002 #custom_rb_epk_r2.epk_lnk_host_id
+- name: cod-18-stage-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_18
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901160002 #custom_rb_epk_r2.epk_lnk_host_id
+- name: cod-38-stage-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_38
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901160002 #custom_rb_epk_r2.epk_lnk_host_id
+- name: cod-40-stage-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_40
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901160002 #custom_rb_epk_r2.epk_lnk_host_id
+- name: cod-42-stage-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_42
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901160002 #custom_rb_epk_r2.epk_lnk_host_id
+- name: cod-44-stage-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_44
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901160002 #custom_rb_epk_r2.epk_lnk_host_id
+- name: cod-52-stage-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_52
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901160002 #custom_rb_epk_r2.epk_lnk_host_id
+- name: cod-54-stage-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_54
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901160002 #custom_rb_epk_r2.epk_lnk_host_id
+- name: cod-55-stage-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_55
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901160002 #custom_rb_epk_r2.epk_lnk_host_id
+- name: cod-70-stage-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_70
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901160002 #custom_rb_epk_r2.epk_lnk_host_id
+
+- name: cod-13-tariff-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12 # CHANGE = 2 MAX_PROCESSED_DIR = 12
+        profile: sklsdpstorkns2
+        entities:
+          - 213103001 #client.sbpremier
+          - 213104017 #cardservicedebt
+- name: cod-16-tariff-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12 # CHANGE = 2 MAX_PROCESSED_DIR = 12
+        profile: sklsdpstorkns2
+        entities:
+          - 216103001 #client.sbpremier
+          - 216104017 #cardservicedebt
+- name: cod-18-tariff-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12 # CHANGE = 2 MAX_PROCESSED_DIR = 12
+        profile: sklsdpstorkns2
+        entities:
+          - 218103001 #client.sbpremier
+          - 218104017 #cardservicedebt
+- name: cod-38-tariff-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12 # CHANGE = 2 MAX_PROCESSED_DIR = 12
+        profile: sklsdpstorkns2
+        entities:
+          - 238103001 #client.sbpremier
+          - 238104017 #cardservicedebt
+- name: cod-40-tariff-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12 # CHANGE = 2 MAX_PROCESSED_DIR = 12
+        profile: sklsdpstorkns2
+        entities:
+          - 240103001 #client.sbpremier
+          - 240104017 #cardservicedebt
+- name: cod-42-tariff-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12 # CHANGE = 2 MAX_PROCESSED_DIR = 12
+        profile: sklsdpstorkns2
+        entities:
+          - 242103001 #client.sbpremier
+          - 242104017 #cardservicedebt
+- name: cod-44-tariff-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12 # CHANGE = 2 MAX_PROCESSED_DIR = 12
+        profile: sklsdpstorkns2
+        entities:
+          - 244103001 #client.sbpremier
+          - 244104017 #cardservicedebt
+- name: cod-52-tariff-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12 # CHANGE = 2 MAX_PROCESSED_DIR = 12
+        profile: sklsdpstorkns2
+        entities:
+          - 252103001 #client.sbpremier
+          - 252104017 #cardservicedebt
+- name: cod-54-tariff-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12 # CHANGE = 2 MAX_PROCESSED_DIR = 12
+        profile: sklsdpstorkns2
+        entities:
+          - 254103001 #client.sbpremier
+          - 254104017 #cardservicedebt
+- name: cod-55-tariff-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12 # CHANGE = 2 MAX_PROCESSED_DIR = 12
+        profile: sklsdpstorkns2
+        entities:
+          - 255103001 #client.sbpremier
+          - 255104017 #cardservicedebt
+- name: cod-70-tariff-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12 # CHANGE = 2 MAX_PROCESSED_DIR = 12
+        profile: sklsdpstorkns2
+        entities:
+          - 270103001 #client.sbpremier
+          - 270104017 #cardservicedebt
+- name: cod-tariff-pprb-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 6 * * *"
+- name: cod-tariff-union
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901101020
+          - 901101070
+          - 901101120
+          - 901101170
+          - 901101220
+          - 901101270
+          - 901101320
+          - 901101420
+          - 901101470
+          - 901101520
+          - 901101620
+          - 901101621
+- name: cod-dep-agrmnt-union
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901101006
+          - 901101056
+          - 901101106
+          - 901101156
+          - 901101206
+          - 901101256
+          - 901101306
+          - 901101406
+          - 901101456
+          - 901101506
+          - 901101606
+
+- name: cod-dep-agrmnt-state-union
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901101007
+          - 901101057
+          - 901101107
+          - 901101157
+          - 901101207
+          - 901101257
+          - 901101307
+          - 901101407
+          - 901101457
+          - 901101507
+          - 901101607
+- name: cod-dep-txn-union
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901101010
+          - 901101060
+          - 901101110
+          - 901101160
+          - 901101210
+          - 901101260
+          - 901101310
+          - 901101410
+          - 901101460
+          - 901101510
+          - 901101610
+- name: cod-13-dep-agrmnt-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 213104008
+          - 213104018
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 213105002
+          - 213105004
+          - 213104016 #OFFCASHCOMP
+
+- name: cod-16-dep-agrmnt-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 216104008
+          - 216104018
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 216105002
+          - 216105004
+          - 216104016 #OFFCASHCOMP
+
+- name: cod-18-dep-agrmnt-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 218104008
+          - 218104018
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 218105002
+          - 218105004
+          - 218104016 #OFFCASHCOMP
+
+- name: cod-38-dep-agrmnt-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 238104008
+          - 238104018
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 238105002
+          - 238105004
+          - 238104016 #OFFCASHCOMP
+
+- name: cod-40-dep-agrmnt-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 240104008
+          - 240104018
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 240105002
+          - 240105004
+          - 240104016 #OFFCASHCOMP
+
+- name: cod-42-dep-agrmnt-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 242104008
+          - 242104018
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 242105002
+          - 242105004
+          - 242104016 #OFFCASHCOMP
+
+- name: cod-44-dep-agrmnt-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 244104008
+          - 244104018
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 244105002
+          - 244105004
+          - 244104016 #OFFCASHCOMP
+
+- name: cod-52-dep-agrmnt-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 252104008
+          - 252104018
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 252105002
+          - 252105004
+          - 252104016 #OFFCASHCOMP
+
+- name: cod-54-dep-agrmnt-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 254104008
+          - 254104018
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 254105002
+          - 254105004
+          - 254104016 #OFFCASHCOMP
+
+- name: cod-55-dep-agrmnt-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 255104008
+          - 255104018
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 255105002
+          - 255105004
+          - 255104016 #OFFCASHCOMP
+
+- name: cod-70-dep-agrmnt-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 270104008
+          - 270104018
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 270105002
+          - 270105004
+          - 270104016 #OFFCASHCOMP
+
+
+- name: cod-13-dep-agrmnt-upd-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 9 * * *"
+
+- name: cod-16-dep-agrmnt-upd-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 9 * * *"
+
+- name: cod-18-dep-agrmnt-upd-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 9 * * *"
+
+- name: cod-38-dep-agrmnt-upd-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 9 * * *"
+
+- name: cod-40-dep-agrmnt-upd-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 9 * * *"
+
+- name: cod-42-dep-agrmnt-upd-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 9 * * *"
+
+- name: cod-44-dep-agrmnt-upd-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 9 * * *"
+
+- name: cod-52-dep-agrmnt-upd-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 9 * * *"
+
+- name: cod-54-dep-agrmnt-upd-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 9 * * *"
+
+- name: cod-55-dep-agrmnt-upd-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 9 * * *"
+
+- name: cod-70-dep-agrmnt-upd-daily
+  dependencies:
+  # for disabling cron should be: * * * * *
+    cron: "0 9 * * *"
+
+
+- name: cod-13-payment-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 213107001
+          - 213104025
+- name: cod-16-payment-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 216107001
+          - 216104025
+- name: cod-18-payment-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 218107001
+          - 218104025
+- name: cod-38-payment-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 238107001
+          - 238104025
+- name: cod-40-payment-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 240107001
+          - 240104025
+- name: cod-42-payment-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 242107001
+          - 242104025
+- name: cod-44-payment-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 244107001
+          - 244104025
+- name: cod-52-payment-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 252107001
+          - 252104025
+- name: cod-54-payment-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 254107001
+          - 254104025
+- name: cod-55-payment-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 255107001
+          - 255104025
+- name: cod-70-payment-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpstorkns2
+        entities:
+          - 270107001
+          - 270104025
+
+
+- name: cod-13-txn-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_kurscur.currency_rate
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 213804016 #OFFCASHCMOP_last_snp (diff)
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901481021
+- name: cod-16-txn-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_kurscur.currency_rate
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 216804016 #OFFCASHCMOP_last_snp (diff)
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901481021
+- name: cod-18-txn-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_kurscur.currency_rate
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 218804016 #OFFCASHCMOP_last_snp (diff)
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901481021
+- name: cod-38-txn-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_kurscur.currency_rate
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 238804016 #OFFCASHCMOP_last_snp (diff)
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901481021
+- name: cod-40-txn-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_kurscur.currency_rate
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 240804016 #OFFCASHCMOP_last_snp (diff)
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901481021
+- name: cod-42-txn-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_kurscur.currency_rate
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 242804016 #OFFCASHCMOP_last_snp (diff)
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901481021
+- name: cod-44-txn-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_kurscur.currency_rate
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 244804016 #OFFCASHCMOP_last_snp (diff)
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901481021
+- name: cod-52-txn-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_kurscur.currency_rate
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 252804016 #OFFCASHCMOP_last_snp (diff)
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901481021
+- name: cod-54-txn-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_kurscur.currency_rate
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 254804016 #OFFCASHCMOP_last_snp (diff)
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901481021
+- name: cod-55-txn-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_kurscur.currency_rate
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 255804016 #OFFCASHCMOP_last_snp (diff)
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901481021
+- name: cod-70-txn-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_70
+          - custom_rb_kurscur.currency_rate
+    replicas:
+      - statId: 12
+        profile: sklsdpstorkns2
+        entities:
+          - 270804016 #OFFCASHCMOP_last_snp (diff)
+      - statId: 2
+        profile: arnsdprozn
+        entities:
+          - 901481021
+
+
+# start workflow cod-<>-dep-agrmnt-salary every months on the 2-nd, at 06:00 morning
+- name: cod-13-dep-agrmnt-salary
+  dependencies:
+    cron: "0 6 2 * *"
+- name: cod-16-dep-agrmnt-salary
+  dependencies:
+    cron: "0 6 2 * *"
+- name: cod-18-dep-agrmnt-salary
+  dependencies:
+    cron: "0 6 2 * *"
+- name: cod-38-dep-agrmnt-salary
+  dependencies:
+    cron: "0 6 2 * *"
+- name: cod-40-dep-agrmnt-salary
+  dependencies:
+    cron: "0 6 2 * *"
+- name: cod-42-dep-agrmnt-salary
+  dependencies:
+    cron: "0 6 2 * *"
+- name: cod-44-dep-agrmnt-salary
+  dependencies:
+    cron: "0 6 2 * *"
+- name: cod-52-dep-agrmnt-salary
+  dependencies:
+    cron: "0 6 2 * *"
+- name: cod-54-dep-agrmnt-salary
+  dependencies:
+    cron: "0 6 2 * *"
+- name: cod-55-dep-agrmnt-salary
+  dependencies:
+    cron: "0 6 2 * *"
+- name: cod-70-dep-agrmnt-salary
+  dependencies:
+    cron: "0 6 2 * *"
+- name: cod-13-dep-txn-aggr-monthly
+  dependencies:
+    cron: "0 19 3 * *"
+    datamarts:
+      - statId: 6
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_13
+- name: cod-16-dep-txn-aggr-monthly
+  dependencies:
+    cron: "0 19 3 * *"
+    datamarts:
+      - statId: 6
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_16
+- name: cod-18-dep-txn-aggr-monthly
+  dependencies:
+    cron: "0 19 3 * *"
+    datamarts:
+      - statId: 6
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_18
+- name: cod-38-dep-txn-aggr-monthly
+  dependencies:
+    cron: "0 19 3 * *"
+    datamarts:
+      - statId: 6
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_38
+- name: cod-40-dep-txn-aggr-monthly
+  dependencies:
+    cron: "0 19 3 * *"
+    datamarts:
+      - statId: 6
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_40
+- name: cod-42-dep-txn-aggr-monthly
+  dependencies:
+    cron: "0 19 3 * *"
+    datamarts:
+      - statId: 6
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_42
+- name: cod-44-dep-txn-aggr-monthly
+  dependencies:
+    cron: "0 19 3 * *"
+    datamarts:
+      - statId: 6
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_44
+- name: cod-52-dep-txn-aggr-monthly
+  dependencies:
+    cron: "0 19 3 * *"
+    datamarts:
+      - statId: 6
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_52
+- name: cod-54-dep-txn-aggr-monthly
+  dependencies:
+    cron: "0 19 3 * *"
+    datamarts:
+      - statId: 6
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_54
+- name: cod-55-dep-txn-aggr-monthly
+  dependencies:
+    cron: "0 19 3 * *"
+    datamarts:
+      - statId: 6
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_55
+- name: cod-70-dep-txn-aggr-monthly
+  dependencies:
+    cron: "0 19 3 * *"
+    datamarts:
+      - statId: 6
+        entities:
+          - custom_rb_cod.dep_agrmnt_txn_det_70
+
+- name: cod-aggr-salary
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 1
+        entities:
+          - custom_rb_cod_pdb.salary_agrmnt_13
+          - custom_rb_cod_pdb.salary_agrmnt_16
+          - custom_rb_cod_pdb.salary_agrmnt_18
+          - custom_rb_cod_pdb.salary_agrmnt_38
+          - custom_rb_cod_pdb.salary_agrmnt_40
+          - custom_rb_cod_pdb.salary_agrmnt_42
+          - custom_rb_cod_pdb.salary_agrmnt_44
+          - custom_rb_cod_pdb.salary_agrmnt_52
+          - custom_rb_cod_pdb.salary_agrmnt_54
+          - custom_rb_cod_pdb.salary_agrmnt_55
+          - custom_rb_cod_pdb.salary_agrmnt_70
+
+- name: cod-13-dep-agrmnt-aggr
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_txn_aggr_13
+
+- name: cod-16-dep-agrmnt-aggr
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_txn_aggr_16
+
+- name: cod-18-dep-agrmnt-aggr
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_txn_aggr_18
+
+- name: cod-38-dep-agrmnt-aggr
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_txn_aggr_38
+
+- name: cod-40-dep-agrmnt-aggr
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_txn_aggr_40
+
+- name: cod-42-dep-agrmnt-aggr
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_txn_aggr_42
+
+- name: cod-44-dep-agrmnt-aggr
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_txn_aggr_44
+
+- name: cod-52-dep-agrmnt-aggr
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_txn_aggr_52
+
+- name: cod-54-dep-agrmnt-aggr
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_txn_aggr_54
+
+- name: cod-55-dep-agrmnt-aggr
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_txn_aggr_55
+
+- name: cod-70-dep-agrmnt-aggr
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_txn_aggr_70
+- name: cod-13-state-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_13
+          - custom_rb_kurscur.currency_rate
+
+- name: cod-16-state-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_16
+          - custom_rb_kurscur.currency_rate
+
+- name: cod-18-state-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_18
+          - custom_rb_kurscur.currency_rate
+
+- name: cod-38-state-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_38
+          - custom_rb_kurscur.currency_rate
+
+
+- name: cod-ft-dep-txn-aggr-union
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 3 * * *"
+
+- name: cod-40-state-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_40
+          - custom_rb_kurscur.currency_rate
+
+- name: cod-42-state-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_42
+          - custom_rb_kurscur.currency_rate
+
+- name: cod-44-state-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_44
+          - custom_rb_kurscur.currency_rate
+
+- name: cod-52-state-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_52
+          - custom_rb_kurscur.currency_rate
+
+- name: cod-54-state-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_54
+          - custom_rb_kurscur.currency_rate
+
+- name: cod-55-state-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_55
+          - custom_rb_kurscur.currency_rate
+
+- name: cod-70-state-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_cod.dep_agrmnt_70
+          - custom_rb_kurscur.currency_rate
+
+### /COD ###
+
+### TCURS ###
+- name: tcurs-daily
+  dependencies:
+    cron: "15 5 * * *"
+
+### /TCURS ###
+
+
+### VNV ###
+- name: greenplum-prod-sales-daily
+  dependencies:
+    # Start every day at 20:00
+    cron: "0 20 * * *"
+
+- name: greenplum-prod-sales-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411027
+  parameters:
+    userName: vnv
+
+- name: greenplum-sale-type-daily
+  dependencies:
+    # Start every day at 20:00
+    cron: "0 20 * * *"
+
+- name: greenplum-sale-type-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411023
+  parameters:
+    userName: vnv
+
+- name: greenplum-sale-channel-daily
+  dependencies:
+    # Start every day at 20:00
+    cron: "0 20 * * *"
+
+- name: greenplum-sale-channel-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411026
+  parameters:
+    userName: vnv
+
+- name: greenplum-product-class-daily
+  dependencies:
+    # Start every day at 20:00
+    cron: "0 20 * * *"
+
+- name: greenplum-product-class-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411024
+  parameters:
+    userName: vnv
+
+### /VNV ###
+
+### PNL ###
+- name: greenplum-v-pl-epk-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 32
+        profile: Default
+        entities:
+          - 901761030
+
+- name: greenplum-v-pl-epk-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        #profile: Default
+        entities:
+          - 901411031
+  parameters:
+    userName: pnl #it's a mock, real username = u_rozn_s_custom_rozn_aggr
+
+### /PNL ###
+
+### SCORING ###
+- name: greenplum-tk-bb-daily
+  dependencies:
+    cron: "0 19 * * *"
+
+- name: greenplum-tk-bb-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411001
+  parameters:
+    userName: scoring
+
+- name: greenplum-scoring-mod-daily
+  dependencies:
+    # Start 2 day of month at 20:00
+    cron: "0 20 1 * *"
+
+- name: greenplum-scoring-mod-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411002
+  parameters:
+    userName: scoring
+
+- name: greenplum-scoring-epk-top-up-daily
+  dependencies:
+    # Start 1 day of month at 20:00
+    cron: "0 20 1 * *"
+
+- name: greenplum-scoring-epk-top-up-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411033
+  parameters:
+    userName: scoring
+
+- name: scoring_platform-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 1
+        entities:
+          - 75110001
+
+### /SCORING ###
+
+
+### CHILDRENPARENT ###
+- name: greenplum-parent-features-flags-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 0 21 10 *"
+- name: greenplum-parent-features-flags-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411038
+  parameters:
+    userName: parent
+
+- name: greenplum-parent-features-children-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "0 0 21 10 *"
+- name: greenplum-parent-features-children-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411037
+  parameters:
+    userName: parent
+
+### /CHILDRENPARENT ###
+
+
+### EVK ###
+- name: greenplum-evk-campaign-dic-daily
+  dependencies:
+    # Start every day at 20:00
+    cron: "0 20 * * *"
+
+- name: greenplum-evk-campaign-dic-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411004
+  parameters:
+    userName: evk
+
+- name: greenplum-evk-campaign-chn-daily
+  dependencies:
+    # Start every day at 20:00
+    cron: "0 20 * * *"
+
+- name: greenplum-evk-campaign-chn-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411005
+  parameters:
+    userName: evk
+
+- name: greenplum-evk-campaign-hst-daily
+  dependencies:
+    # Start every day at 20:00
+    cron: "0 20 * * *"
+
+- name: greenplum-evk-campaign-hst-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411006
+  parameters:
+    userName: evk
+
+- name: greenplum-evk-campaign-hist1-daily
+  dependencies:
+    # Start every day at 20:00
+    cron: "0 20 * * *"
+
+- name: greenplum-evk-campaign-hist1-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411082
+  parameters:
+    userName: evk
+
+- name: greenplum-evk-campaign-hist2-daily
+  dependencies:
+    # Start every day at 20:00
+    cron: "0 20 * * *"
+
+- name: greenplum-evk-campaign-hist2-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411083
+  parameters:
+    userName: evk
+
+- name: greenplum-evk-campaign-hst-snp-monthly
+  dependencies:
+    cron: "0 21 * * *"
+  parameters:
+    userName: evk
+
+- name: greenplum-evk-campaign-dic-snp-monthly
+  dependencies:
+    cron: "0 21 * * *"
+  parameters:
+    userName: evk
+
+- name: greenplum-evk-campaign-channel-snp-monthly
+  dependencies:
+    cron: "0 21 * * *"
+  parameters:
+    userName: evk
+
+- name: greenplum-evk-flag-flat-act-daily
+  dependencies:
+    # Start every day at 19:00
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901761825
+
+- name: greenplum-evk-flag-flat-act-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411072
+  parameters:
+    userName: evk
+
+### /EVK ###
+
+### BO ###
+- name: greenplum-dic-security-list-daily
+  dependencies:
+    # Start every day at 19:00
+    cron: "0 19 * * *"
+
+- name: greenplum-dic-security-list-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411012
+  parameters:
+    userName: bo
+
+- name: greenplum-dic-security-list-full-daily
+  dependencies:
+    # Start every day at 19:00
+    cron: "15 19 * * *"
+
+- name: greenplum-dic-security-list-full-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411036
+  parameters:
+    userName: bo
+
+- name: greenplum-bo-risk-profile-daily
+  dependencies:
+    # Start every day at 19:00
+    cron: "10 19 * * *"
+
+- name: greenplum-bo-risk-profile-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411013
+  parameters:
+    userName: bo
+
+- name: greenplum-dic-agreement-daily
+  dependencies:
+    cron: "25 19 * * *"
+
+- name: greenplum-dic-agreement-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411008
+  parameters:
+    userName: bo
+
+- name: greenplum-bo-agrmnt-daily
+  dependencies:
+    cron: "30 6 * * *"
+
+- name: greenplum-bo-agrmnt-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411011
+  parameters:
+    userName: bo
+
+- name: greenplum-bo-balance-daily
+  dependencies:
+    cron: "0 5 * * *"
+
+- name: greenplum-bo-balance-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411022
+  parameters:
+    userName: bo
+
+- name: greenplum-bo-agrmnt-attr-daily
+  dependencies:
+    cron: "0 19 * * *"
+
+- name: greenplum-bo-agrmnt-attr-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411015
+  parameters:
+    userName: bo
+
+- name: greenplum-bo-asset-bal-daily
+  dependencies:
+    cron: "0 10 * * *"
+
+- name: greenplum-bo-asset-bal-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411016
+  parameters:
+    userName: bo
+
+- name: greenplum-bo-je-balance-daily
+  dependencies:
+    # Start every day at 0:00
+    cron: "0 0 * * *"
+
+- name: greenplum-bo-je-balance-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411017
+  parameters:
+    userName: bo
+
+- name: greenplum-bo-je-details-daily
+  dependencies:
+    # Start every day at 0:00
+    cron: "0 0 * * *"
+
+- name: greenplum-bo-je-details-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411018
+  parameters:
+    userName: bo
+
+- name: greenplum-bo-je-security-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901761818
+
+- name: greenplum-bo-je-security-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411019
+  parameters:
+    userName: bo
+
+- name: greenplum-dic-market-type-daily
+  dependencies:
+    # Start every day at 19:00
+    cron: "20 19 * * *"
+
+- name: greenplum-dic-market-type-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411020
+  parameters:
+    userName: bo
+
+- name: greenplum-dic-trans-type-daily
+  dependencies:
+    # Start every day at 19:00
+    cron: "5 19 * * *"
+
+- name: greenplum-dic-trans-type-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411021
+  parameters:
+    userName: bo
+
+- name: greenplum-dic-tariff-daily
+  dependencies:
+    cron: "0 19 * * *"
+
+- name: greenplum-dic-tariff-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411028
+  parameters:
+    userName: bo
+
+### /BO ###
+
+### DEPFIN ###
+- name: greenplum-depfin-billing-local-ufo-daily
+  dependencies:
+    # Start every day at 00:00
+    cron: "0 0 * * *"
+
+- name: greenplum-depfin-billing-local-ufo-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411034
+  parameters:
+    userName: depfin
+
+- name: greenplum-dim-ecosys-client-agg-daily
+  dependencies:
+    cron: "0 2 * * *"
+
+- name: greenplum-dim-ecosys-client-agg-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411035
+  parameters:
+    userName: depfin
+
+- name: greenplum-dim-ecosys-dzo-client-agg-day-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901762500
+
+- name: greenplum-dim-ecosys-dzo-client-agg-day-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411078
+  parameters:
+    userName: depfin
+
+- name: greenplum-ft-ecosys-txn-det-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901762500
+
+- name: greenplum-ft-ecosys-txn-det-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411079
+  parameters:
+    userName: depfin
+
+- name: greenplum-dzo-client-agg-param-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        entities:
+          - 901411078
+          - 901411079
+  parameters:
+    userName: depfin
+
+### /DEPFIN ###
+
+### OTHER ###
+- name: rozn_client_aggr-monthly
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_sbol.sbol_logon_aggr_for_mega
+          - custom_rb_sbol.sbol_oper_aggr_for_mega
+
+- name: saving_certificate-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        entities:
+          - 109000001
+
+- name: rb-triggers-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 930001101
+
+- name: risk-triggers-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 930001101
+
+- name: stoplist-nsi-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 8110004
+          - 8110005
+          - 8120016
+          - 8120018
+
+- name: stoplist-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 12
+        entities:
+          - 8110002
+          - 8110004
+          - 8120009
+
+- name: yandexmarket-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        entities:
+          - 396100001
+
+- name: spoobk-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        entities:
+          - 67110011
+    datamarts:
+      - statId: 2
+        entities:
+          - custom_rb_card.card
+          - custom_rb_card.card_agrmnt
+
+- name: clickstream-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        entities:
+          - 302100000
+
+- name: clickstream-kafka-daily
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        entities:
+          - 302100000
+  parameters:
+    skipIfBuiltToday: false
+
+- name: clickstream-monthly
+  dependencies:
+    # for disabling cron should be: * * * * *
+    cron: "* * * * *"
+    datamarts:
+      - statId: 6
+        entities:
+          # 5-th day of month
+          # FOR CLICKSTREAM_MNTH
+          - custom_rb_clickstream.clickstream
+
+### EVO ###
+# Т.к. у всех витрин на GP одна общая статистика и сущность
+# а при подключении к GP число connect ограничено
+# потоки стартуют от реплики и друг за другом в следующей последовательности:
+#  agg-results -> ecosystem-resp-rules -> evo-resp-cln -> trx-scg-rules
+#  dic-product -> extra-source-rules -> resp-cln-month -> universe-tables
+# camp2-rules -> monthly-results -> resp-detail
+# evo-dic -> prdct-rslt-salt-mnth -> resp-rules
+# dic-sk -> prdct-rslt-salt-regular -> trx-mech-resp-rules
+
+
+- name: greenplum-evo-agg-results-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+
+- name: greenplum-evo-agg-results-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411040
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-dic-product-daily
+  dependencies:
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+
+- name: greenplum-evo-dic-product-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411039
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-camp2-rules-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+
+- name: greenplum-evo-camp2-rules-mover-daily
+  dependencies:
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411041
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-dic-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+
+- name: greenplum-evo-dic-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411042
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-dic-sk-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+
+- name: greenplum-evo-dic-sk-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411043
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-ecosystem-resp-rules-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+      - statId: 19
+        entities:
+          - 901411040
+
+- name: greenplum-evo-ecosystem-resp-rules-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411044
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-extra-source-rules-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+      - statId: 19
+        entities:
+          - 901411039
+
+- name: greenplum-evo-extra-source-rules-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411045
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-monthly-results-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+      - statId: 19
+        entities:
+          - 901411041
+
+- name: greenplum-evo-monthly-results-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411046
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-prdct-rslt-salt-mnth-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+      - statId: 19
+        entities:
+          - 901411042
+
+- name: greenplum-evo-prdct-rslt-salt-mnth-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411054
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-prdct-rslt-salt-regular-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+      - statId: 19
+        entities:
+          - 901411043
+
+- name: greenplum-evo-prdct-rslt-salt-regular-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411055
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-resp-cln-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+      - statId: 19
+        entities:
+          - 901411044
+
+- name: greenplum-evo-resp-cln-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411047
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-resp-cln-month-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+      - statId: 19
+        entities:
+          - 901411045
+
+- name: greenplum-evo-resp-cln-month-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411048
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-resp-detail-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+      - statId: 19
+        entities:
+          - 901411046
+
+- name: greenplum-evo-resp-detail-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411049
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-resp-rules-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+      - statId: 19
+        entities:
+          - 901411054
+
+- name: greenplum-evo-resp-rules-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411050
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-trx-mech-resp-rules-daily
+  dependencies:
+    cron: "* * * * *"
+    replicas:
+      # cron is disabled
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+      - statId: 19
+        entities:
+          - 901411055
+
+- name: greenplum-evo-trx-mech-resp-rules-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411051
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-trx-scg-rules-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      # cтартует от реплики и от 901411047
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+      - statId: 19
+        entities:
+          - 901411047
+
+- name: greenplum-evo-trx-scg-rules-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411052
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-universe-tables-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: Default
+        entities:
+          - 901763501
+      - statId: 19
+        entities:
+          - 901411048
+
+- name: greenplum-evo-universe-tables-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411053
+  parameters:
+    userName: evo
+
+- name: greenplum-evo-kpi-daily
+  dependencies:
+    # Start every day at 19:00
+    cron: "0 19 * * *"
+
+- name: greenplum-evo-kpi-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411081
+  parameters:
+    userName: evo
+
+- name: greenplum-rep-comm-funnel-navi-daily
+  dependencies:
+    # Start every day at 19:00
+    cron: "0 19 * * *"
+- name: greenplum-rep-comm-funnel-navi-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411085
+  parameters:
+    userName: parent
+- name: greenplum-evo-kpi-scg-daily
+  dependencies:
+    # Start every day at 19:00
+    cron: "0 19 * * *"
+- name: greenplum-evo-kpi-scg-mover-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 19
+        entities:
+          - 901411086
+  parameters:
+    userName: parent
+
+
+### /EVO ###
+### EKP ###
+- name: greenplum-ekp-dic-product-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+
+### /EKP ###
+
+### EIKP ###
+- name: eikp-dim-dzo
+  dependencies:
+    cron: "0 3 * * *"
+
+- name: eikp-dim-campaign-okko-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 815100038
+          - 815100039
+
+- name: eikp-dim-channel-okko-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 815100038
+          - 815100039
+
+- name: eikp-dim-target-okko-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 815100038
+          - 815100039
+
+- name: eikp-dim-action-okko-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 815100038
+          - 815100039
+
+- name: eikp-contact-okko-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 815100038
+          - 815100039
+
+- name: eikp-dim-sbmkt-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 560100023
+          - 560100026
+          - 560100025
+
+- name: eikp-dim-campaign-sbmkt-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 560100023
+          - 560100026
+          - 560100025
+
+- name: eikp-dim-channel-sbmkt-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 560100023
+          - 560100026
+          - 560100025
+
+- name: eikp-dim-target-sbmkt-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 560100023
+          - 560100026
+          - 560100025
+
+- name: eikp-dim-action-sbmkt-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 560100023
+          - 560100026
+          - 560100025
+
+- name: eikp-contact-sbmkt-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 560100023
+          - 560100026
+          - 560100025
+
+- name: eikp-dim-campaign-eapteka-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 445000003
+
+- name: eikp-dim-channel-eapteka-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 445000003
+
+- name: eikp-dim-target-eapteka-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 445000003
+
+- name: eikp-dim-action-eapteka-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 445000003
+
+- name: eikp-contact-eapteka-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 445000003
+
+- name: eikp-scd-uuid
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 2
+        profile: sklsdpdqepk
+        entities:
+          - 901880267
+            
+- name: eikp-dim-campaign-samokat-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 974100010
+          - 974100009
+
+- name: eikp-dim-channel-samokat-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 974100010
+          - 974100009
+
+- name: eikp-dim-target-samokat-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 974100010
+          - 974100009
+
+- name: eikp-dim-action-samokat-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 974100010
+          - 974100009
+
+- name: eikp-contact-samokat-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 974100010
+          - 974100009
+
+- name: eikp-dim-action-sbmgmrkt-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 846100012
+
+- name: eikp-contact-sbmgmrkt-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 846100012
+
+- name: eikp-dim-campaign-sbmgmrkt-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 846100012
+
+- name: eikp-dim-channel-sbmgmrkt-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 846100012
+
+- name: eikp-dim-target-sbmgmrkt-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 846100012
+
+- name: eikp-dim-action-sberzvuk-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 845100015
+
+- name: eikp-contact-sberzvuk-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 845100014
+          - 845100015
+
+- name: eikp-dim-campaign-sberzvuk-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 845100014
+
+- name: eikp-dim-channel-sberzvuk-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 845100014
+
+- name: eikp-dim-target-sberzvuk-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 845100015
+
+- name: eikp-dim-action-sbermobail-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 446100017
+
+- name: eikp-dim-channel-sbermobail-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 446100018
+
+- name: eikp-dim-target-sbermobail-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 446100012
+
+- name: eikp-dim-campaign-sbermobail-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 446100012
+
+- name: eikp-contact-sbermobail-daily
+  dependencies:
+    # cron is disabled
+    cron: "* * * * *"
+    replicas:
+      - statId: 5
+        profile: arnsdpxdata
+        entities:
+          - 446100012
+          - 446100018
+          - 446100017
+### /EIKP ###
+
+### /OTHER ###

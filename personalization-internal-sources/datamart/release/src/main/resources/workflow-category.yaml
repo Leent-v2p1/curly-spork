@@ -1,0 +1,13 @@
+categories:
+  - common:
+      name: Personalization internal
+      action: Personalization internal
+      deleted: false
+  - support:
+      name: Personalization internal support
+      action: Personalization internal support
+      deleted: false
+  - verification:
+      name: Personalization internal verification
+      action: Personalization internal verification
+      deleted: false

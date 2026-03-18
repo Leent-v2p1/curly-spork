@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>personalization-internal</artifactId>
+        <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+        <version>1.0.2</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>datamart-etl</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>card</module>
+        <module>cod</module>
+        <module>erib</module>
+        <module>loan</module>
+        <module>savingsertificate</module>
+        <module>smartvista</module>
+        <module>spoobk</module>
+        <module>stoplist</module>
+        <module>rb-triggers</module>
+        <module>risk-triggers</module>
+        <module>scoring-platfotm</module>
+        <module>yandexmarket</module>
+        <module>clickstream</module>
+        <module>tcurs</module>
+        <module>rozn-client-aggr</module>
+        <module>greenplum</module>
+        <module>eikp</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>datamart-common</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>datamart-common</artifactId>
+            <type>test-jar</type>
+            <version>1.0.2</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

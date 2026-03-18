@@ -1,0 +1,17 @@
+memoryPerset:
+  val1: &LOW "LOW"   # 20 executors x 2G
+  val2: &MID "MID"   # 40 executors x 4G
+  val3: &HIGH "HIGH" # 80 executors x 8G
+
+
+custom_rb_card_stg:
+  f_i_hst:
+    type: history_stage
+    executors: 33
+    executorMemory: 3G
+    replicaSnapshotTable: internal_way4_ows.f_i
+
+  doc_hst:
+    type: history_stage
+    memoryPreset: *MID
+    replicaSnapshotTable: internal_way4_ows.doc

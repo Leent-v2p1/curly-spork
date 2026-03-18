@@ -1,0 +1,102 @@
+
+package ru.sberbank.bigdata.cloud.rb.internal.sources.generator.api.oozie.entities.source.shell_action;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+
+/**
+ * <p>Java class for PREPARE complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="PREPARE">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="delete" type="{uri:oozie:shell-action:0.3}DELETE" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="mkdir" type="{uri:oozie:shell-action:0.3}MKDIR" maxOccurs="unbounded" minOccurs="0"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "PREPARE", namespace = "uri:oozie:shell-action:0.3", propOrder = {
+    "delete",
+    "mkdir"
+})
+public class PREPARE {
+
+    @XmlElement(namespace = "uri:oozie:shell-action:0.3")
+    protected List<DELETE> delete;
+    @XmlElement(namespace = "uri:oozie:shell-action:0.3")
+    protected List<MKDIR> mkdir;
+
+    /**
+     * Gets the value of the delete property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the delete property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getDelete().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link DELETE }
+     * 
+     * 
+     */
+    public List<DELETE> getDelete() {
+        if (delete == null) {
+            delete = new ArrayList<DELETE>();
+        }
+        return this.delete;
+    }
+
+    /**
+     * Gets the value of the mkdir property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the mkdir property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getMkdir().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link MKDIR }
+     * 
+     * 
+     */
+    public List<MKDIR> getMkdir() {
+        if (mkdir == null) {
+            mkdir = new ArrayList<MKDIR>();
+        }
+        return this.mkdir;
+    }
+
+}

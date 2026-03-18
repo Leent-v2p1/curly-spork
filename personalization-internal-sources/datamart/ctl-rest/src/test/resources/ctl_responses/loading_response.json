@@ -1,0 +1,214 @@
+{
+  "end_dttm": "2020-02-16 03:21:36.0",
+  "auto": true,
+  "workflow": {
+    "name": "masspers-clsklrozn-mdm-stoplist-daily-datamarts",
+    "param": [
+      {
+        "param": "singleLoading",
+        "wf_id": 7588,
+        "prior_value": "true",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "instanceName",
+        "wf_id": 7588,
+        "prior_value": "stoplist-daily",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "skipIfBuiltToday",
+        "wf_id": 7588,
+        "prior_value": "true",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "keytabPath",
+        "wf_id": 7588,
+        "prior_value": "/keytab/u_sklrozn_s_custom_rb.keytab",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "oozie.use.system.libpath",
+        "wf_id": 7588,
+        "prior_value": "true",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "ctlVersionRequired",
+        "wf_id": 7588,
+        "prior_value": "1.1.2",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "environment",
+        "wf_id": 7588,
+        "prior_value": "production",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "propertiesPath",
+        "wf_id": 7588,
+        "prior_value": "/oozie-app/wf/custom/rb/production/utils/common/datamart-properties.yaml",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "yarnQueue",
+        "wf_id": 7588,
+        "prior_value": "root.datamart.spb",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "tableParentDir",
+        "wf_id": 7588,
+        "prior_value": "/data/custom/rb/",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "graphite.carbon.port",
+        "wf_id": 7588,
+        "prior_value": "2003",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "graphite.carbon.host",
+        "wf_id": 7588,
+        "prior_value": "voluptas5.cm.df.sbrf.ru",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "hiveJdbcUrl",
+        "wf_id": 7588,
+        "prior_value": "jdbc:hive2://fauna588.cloud.df.sbrf.ru:10000",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "hiveMetastoreUri",
+        "wf_id": 7588,
+        "prior_value": "thrift://fauna588.cloud.df.sbrf.ru:9083",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "principal",
+        "wf_id": 7588,
+        "prior_value": "hive/_HOST@DF.SBRF.RU",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "user.name",
+        "wf_id": 7588,
+        "prior_value": "u_sklrozn_s_custom_rb",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "oozie.wf.application.path",
+        "wf_id": 7588,
+        "prior_value": "/oozie-app/wf/custom/rb/production/mdm/stoplist-daily",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "appName",
+        "wf_id": 7588,
+        "prior_value": "masspers-clsklrozn-mdm-stoplist-daily-datamarts",
+        "jclass": "",
+        "action": ""
+      },
+      {
+        "param": "distribution.build.time",
+        "wf_id": 7588,
+        "prior_value": "2020-02-14T14:45:58.375",
+        "jclass": "",
+        "action": ""
+      }
+    ],
+    "infProject": "",
+    "wf_event_sched": [
+      {
+        "stat_id": 2,
+        "profile": "clsklrozn",
+        "entity_id": 901053001,
+        "wf_id": 7588,
+        "active": true
+      }
+    ],
+    "infFolder": "",
+    "scheduled": true,
+    "id": 7588,
+    "profile": "clsklrozn",
+    "category": "DHP2 Personalization internal",
+    "infWorkflow": "",
+    "type": "principal",
+    "infAppName": "",
+    "singleLoading": true,
+    "wf_time_sched": {
+      "wf_id": 7588,
+      "sched": "",
+      "active": false,
+      "faultTolerance": false
+    },
+    "engine": "oozie",
+    "deleted": false,
+    "eventAwaitStrategy": "and"
+  },
+  "start_dttm": "2020-02-15 23:50:09.0",
+  "xid": "0000038-200215103407853-oozie-oozi-W",
+  "alive": "COMPLETED",
+  "id": 2218935,
+  "profile": "clsklrozn",
+  "status": "SUCCESS",
+  "wf_id": 7588,
+  "loading_status": [
+    {
+      "loading_id": 2218935,
+      "effective_from": "2020-02-16 03:21:35.828174",
+      "status": "SUCCESS"
+    },
+    {
+      "loading_id": 2218935,
+      "effective_from": "2020-02-16 03:11:35.564832",
+      "status": "RUNNING"
+    },
+    {
+      "loading_id": 2218935,
+      "effective_from": "2020-02-16 03:11:35.168578",
+      "status": "START"
+    },
+    {
+      "loading_id": 2218935,
+      "effective_from": "2020-02-16 03:11:35.050762",
+      "status": "PARAM"
+    },
+    {
+      "loading_id": 2218935,
+      "effective_from": "2020-02-16 03:11:35.049528",
+      "status": "PREREQ"
+    },
+    {
+      "loading_id": 2218935,
+      "effective_from": "2020-02-16 03:11:35.046976",
+      "status": "LOCK-WAIT"
+    },
+    {
+      "loading_id": 2218935,
+      "effective_from": "2020-02-15 23:50:10.307082",
+      "status": "EVENT-WAIT"
+    }
+  ]
+}

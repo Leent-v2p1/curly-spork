@@ -1,0 +1,135 @@
+{
+  "appConfig": {
+    "stages": {
+      "rollBack": {
+        "enabled": "false"
+      },
+      "CdcCalc": {
+        "enabled": "false"
+      },
+      "kafka2hdfs": {
+        "enabled": "false"
+      },
+      "PreStage": {
+        "enabled": "true"
+      },
+      "historisity": {
+        "enabled": "false"
+      },
+      "dataQualityCheck":{
+        "enabled": "false"
+      },
+      "coalesceFiles": {
+        "enabled": "false"
+      },
+      "backUp": {
+        "enabled": "false"
+      },
+      "moveTable": {
+        "enabled": "false"
+      },
+      "hdfs2kafka": {
+        "enabled": "false"
+      }
+    }
+  },
+  "treadConfigs": [
+    {
+      "name": "dm_union_campaign_history_thread",
+      "stages": [
+        {
+          "name": "PreStage",
+          "enabled": "true",
+          "config": {
+            "filePath": "hdfs:///oozie-app/b2c/b2c_infra/custom_rb_evk/etl/workflows/dm_union_campaign_history/dml/threads/dm_union_campaign_history_thread/dm_union_campaign_history_thread.sql"
+          }
+        },
+        {
+          "name": "coalesceFiles",
+          "enabled": "false",
+          "config": {
+            "hdfsPaths": "/data/custom/rb/evk/stg/dm_union_campaign_history_stg"
+            "hdfsWorkPath": "/data/custom/rb/evk/stg/dm_union_campaign_history_temp",
+            "minFileSizeMB": 128,
+            "compressionType": "snappy",
+            "parallelDegree": "1"
+          }
+        },
+        {
+          "name": "backUp",
+          "enabled": "false",
+          "config": {
+            "targetTableName": "dm_union_campaign_history",
+            "backupSchema": "bkp"
+          }
+        },
+        {
+          "name": "moveTable",
+          "publishStats": [
+            {
+              "entityId": "901411005",
+              "statId": "2",
+              "statValue": "true",
+              "statValueType": "constant"
+            },
+            {
+              "entityId": "901411005",
+              "statId": "34",
+              "statValue": "typeWf",
+              "statValueType": "variable"
+            },
+            {
+              "entityId": "901411005",
+              "statId": "5",
+              "statValue": "businessDate",
+              "statValueType": "variable"
+            },
+            {
+              "entityId": "901411005",
+              "statId": "10",
+              "statValue": "ctlLoading",
+              "statValueType": "variable"
+            },
+            {
+              "entityId": "901411005",
+              "statId": "11",
+              "statValue": "lastLoadedTime",
+              "statValueType": "variable"
+            }
+          ],
+          "enabled": "false",
+          "config": {
+            "s2tTableList": "dm_union_campaign_history_stg->dm_union_campaign_history",
+            "srcSchema": "custom_rb_evk_stg",
+            "tgtSchema": "custom_rb_evk",
+            "compressionType": "snappy",
+            "workMode": "arc",
+            "truncateFilterList": "",
+            "truncateArcList": "dm_union_campaign_history->all",
+            "truncateIncFilterList": "",
+            "instanceFilter": "",
+            "truncateStgFromPa": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "trunc_dm_union_campaign_history_thread",
+      "stages": [
+        {
+          "name": "PreStage",
+          "enabled": "true",
+          "config": {
+            "filePath": "hdfs:///oozie-app/b2c/b2c_infra/custom_rb_evk/etl/workflows/dm_union_campaign_history/dml/threads/trunc_dm_union_campaign_history_thread/trunc_dm_union_campaign_history_thread.sql"
+          }
+        }
+      ]
+    }
+  ],
+  "treadRelations": [
+    {
+      "from": "dm_union_campaign_history_thread",
+      "to": "trunc_dm_union_campaign_history_thread"
+    }
+  ]
+}

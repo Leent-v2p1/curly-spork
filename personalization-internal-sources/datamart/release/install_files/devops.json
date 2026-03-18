@@ -1,0 +1,69 @@
+{
+  "NEXUS3_ARTIFACT_ID": "CI02364774",
+  "NEXUS3_GROUP_ID": "CI02320085",
+  "Emails": "DHPD2_sigma@sberbank.ru",
+  "SonarQube": "true",
+  "Checkmarx": "true",
+  "ReleaseNotes": "",
+  "jira_task_release" : "",
+  "frame": "SPB",
+  "module": "eikp",
+  "sq_source_folder": "datamart",
+  "sq_exclusions_folder": "datamart/common/src/main/resources",
+  "sq_source_encoding": "UTF-8",
+  "sq_project_key": "ru.sberbank.bigdata.datacloud:personalization-internal-parent",
+  "sq_project_name": "personalization-internal-parent",
+  "sq_binary_folder": "datamart/release/target",
+  "mvn": {
+    "pom_xml_path": "datamart/release/pom.xml",
+    "ci_settings_path": "resources/ci-settings.xml"
+  },
+  "checkmarx": {
+    "team": [
+      {
+        "cm_mus_code": "00070014",
+        "cm_mus_name": "[СФД] Клиент 360 - Аналитический профиль внутренние данные - 1",
+        "cm_mus_po_mail": "DHPD2_sigma@sberbank.ru"
+      }
+    ],
+    "cm_sm_id": "2364774",
+    "cm_sm_name": "2364774_personalization-internal-sources_release",
+    "cm_creds_id": "CxCreds_2",
+    "cm_jira_area": "WMP",
+    "cm_masks": "**/modules/**",
+    "cm_preset_id": "36",
+    "cm_wait_qg": "-1",
+    "domain":"DELTA"
+
+  },
+  "standsConfig" : {
+    "dev": {
+      "standName": "sdpdevsklsdprozn",
+      "Schema": "custom_rozn_eikp"
+    },
+    "ift": {
+      "standName": "sdpiftpkaprbmp",
+      "Schema": "custom_rozn_eikp"
+    },
+    "psi": {
+      "standName": "grnplm_grnplm_skl_psi",
+      "Schema": "custom_rozn_eikp"
+    },
+    "rdt": {
+      "standName": "utarnsdprozn",
+      "Schema": "custom_rozn_eikp"
+    },
+    "rdt2":{
+      "standName": "utsklsdprozn2",
+      "Schema": "custom_rozn_eikp"
+    },
+    "prom": {
+      "standName": "arnsdprozn",
+      "Schema": "custom_rozn_eikp"
+    },
+    "prom2": {
+      "standName": "sklsdprozn",
+      "Schema": "custom_rozn_eikp"
+    }
+  }
+}

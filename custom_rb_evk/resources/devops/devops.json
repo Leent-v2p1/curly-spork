@@ -1,0 +1,51 @@
+{
+  "block": "b2c",
+  "build": "maven",
+  "datamart_ansible_vars": "resources/mart.yml",
+  "datamart_group": "b2c_infra",
+  "datamart_name": "custom_rb_evk",
+  "distrib_files": [
+    {
+      "destination": "ctl/",
+      "source": "resources/ctl/ctl.yml"
+    },
+    {
+      "destination": "hdfs/etl/workflows/",
+      "source": "etl/workflows/*"
+    },
+    {
+      "destination": "hdfs/conf/external/",
+      "source": "resources/external/*"
+    },
+    {
+      "destination": "hdfs/conf/secman/",
+      "source": "resources/secman/*"
+    },
+    {
+      "destination": "sql/ddl/",
+      "source": "etl/ddl/*"
+    }
+  ],
+  "emails": "SAShustova@sberbank.ru",
+  "maven": {
+    "options_mvn": "-Psonar-coverage -DskipTests",
+    "pom_path": "pom.xml",
+    "set_path": "settings.xml"
+  },
+  "nexus3": {
+    "ci_as_fp": "CI02364774",
+    "ci_it_service": "CI02320085"
+  },
+  "run_hive_script_sql": false,
+  "s2t_confl_url": "",
+  "sast_conf": "resources/devops/devsecops.yml",
+  "sq_pr_key": "ru.sberbank.bigdata.gbmasper.databatch:b2c",
+  "sq_pr_name": "databatch_b2c",
+  "sq_scan_folder": "etl/workflows",
+  "stand_name": "rozn",
+  "template_files": [
+    "hdfs/conf/secman/secman.conf"
+  ],
+  "type": "oozie",
+  "version": "D-00.000.01"
+}

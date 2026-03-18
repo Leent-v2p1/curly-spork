@@ -1,0 +1,156 @@
+<workflow-app name="upload-catalogs" xmlns="uri:oozie:workflow:0.4">
+    <global>
+        <configuration>
+            <property>
+                <name>mapred.job.queue.name</name>
+                <value>${yarnQueue}</value>
+            </property>
+        </configuration>
+    </global>
+    <start to="parallelCatalogs"/>
+
+    <fork name="parallelCatalogs">
+        <path start="upload-card-product"/>
+        <path start="upload-card-txn-types"/>
+        <path start="upload-continent-iso"/>
+        <path start="upload-mcc"/>
+        <path start="upload-mcc-cust-cluster"/>
+        <path start="upload-mcc-group"/>
+        <path start="upload-mcc-group-type"/>
+        <path start="upload-mcc-subgroup"/>
+        <path start="upload-trans-subtype-to-trx-type"/>
+        <path start="upload-trx-type-to-fee-type"/>
+        <path start="upload-trans-type"/>
+        <path start="upload-agreement-status"/>
+        <path start="upload-card-status"/>
+    </fork>
+    <join name="joinCatalogs" to="decisionCatalogs"/>
+    <decision name="decisionCatalogs">
+        <switch>
+            <case to="kill">${not empty wf:lastErrorNode()}</case>
+            <default to="end"/>
+        </switch>
+    </decision>
+
+    <action name="upload-card-product">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/uat/way4/generated/create-card-product-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinCatalogs"/>
+        <error to="joinCatalogs"/>
+    </action>
+
+    <action name="upload-card-txn-types">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/uat/way4/generated/create-txn-type-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinCatalogs"/>
+        <error to="joinCatalogs"/>
+    </action>
+
+    <action name="upload-continent-iso">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/uat/way4/generated/create-country-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinCatalogs"/>
+        <error to="joinCatalogs"/>
+    </action>
+
+    <action name="upload-mcc">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/uat/way4/generated/create-mcc-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinCatalogs"/>
+        <error to="joinCatalogs"/>
+    </action>
+
+    <action name="upload-mcc-cust-cluster">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/uat/way4/generated/create-mcc-cust-cluster-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinCatalogs"/>
+        <error to="joinCatalogs"/>
+    </action>
+
+    <action name="upload-mcc-group">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/uat/way4/generated/create-mcc-group-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinCatalogs"/>
+        <error to="joinCatalogs"/>
+    </action>
+
+    <action name="upload-mcc-group-type">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/uat/way4/generated/create-mcc-group-type-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinCatalogs"/>
+        <error to="joinCatalogs"/>
+    </action>
+
+    <action name="upload-mcc-subgroup">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/uat/way4/generated/create-mcc-subgroup-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinCatalogs"/>
+        <error to="joinCatalogs"/>
+    </action>
+
+    <action name="upload-trans-subtype-to-trx-type">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/uat/way4/generated/create-trans-subtype-to-trx-type-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinCatalogs"/>
+        <error to="joinCatalogs"/>
+    </action>
+
+    <action name="upload-trx-type-to-fee-type">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/uat/way4/generated/create-trx-type-to-fee-type-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinCatalogs"/>
+        <error to="joinCatalogs"/>
+    </action>
+
+    <action name="upload-trans-type">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/uat/way4/generated/create-trans-type-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinCatalogs"/>
+        <error to="joinCatalogs"/>
+    </action>
+
+    <action name="upload-agreement-status">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/uat/way4/generated/create-agreement-status-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinCatalogs"/>
+        <error to="joinCatalogs"/>
+    </action>
+
+    <action name="upload-card-status">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/uat/way4/generated/create-card-status-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinCatalogs"/>
+        <error to="joinCatalogs"/>
+    </action>
+
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

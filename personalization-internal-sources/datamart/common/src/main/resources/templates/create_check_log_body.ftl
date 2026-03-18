@@ -1,0 +1,1 @@
+${date}   |   ${datamart_name}   |   ${check_type}   |   ${check_description}   |   ${rows_count}

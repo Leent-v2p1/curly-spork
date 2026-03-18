@@ -1,0 +1,67 @@
+<workflow-app name="masspers-prod-erib-logon-${instanceName}-datamarts" xmlns="uri:oozie:workflow:0.4">
+    <global>
+        <configuration>
+            <property>
+                <name>mapred.job.queue.name</name>
+                <value>${yarnQueue}</value>
+            </property>
+
+            <property>
+                <!-- Amount of physical memory, than can be allocated for yarn containers (default is 8192)
+                The value increased so that driverMemory + driverMemoryOverhead < yarn.nodemanager.resource.memory-mb -->
+                <name>oozie.launcher.yarn.nodemanager.resource.memory-mb</name>
+                <value>32000</value>
+            </property>
+            <property>
+                <!-- datamart sbol-logon-aggr-dt on first build fails with OOM on launcher container,
+                 because it generates a lot of partitions and tasks, so it needs more memory-->
+                <name>oozie.launcher.mapreduce.map.memory.mb</name>
+                <value>32000</value>
+            </property>
+        </configuration>
+    </global>
+
+    <start to="validate-ctl-version"/>
+
+    <action name="validate-ctl-version">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/utils/common/validate-ctl-version</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="create-sbol-logon-aggr-dt"/>
+        <error to="kill"/>
+    </action>
+
+    <!-- <action name="create-sbol-logon">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-logon-${instanceName}-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="create-sbol-logon-aggr-dt"/>
+        <error to="kill"/>
+    </action>-->
+
+    <action name="create-sbol-logon-aggr-dt">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-logon-aggr-dt-${instanceName}-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="erib-instance-view-creator">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-erib-instance-view-creator-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="end"/>
+        <!--Ignore to prevent error of parallel instances view creating-->
+        <error to="end"/>
+    </action>
+
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

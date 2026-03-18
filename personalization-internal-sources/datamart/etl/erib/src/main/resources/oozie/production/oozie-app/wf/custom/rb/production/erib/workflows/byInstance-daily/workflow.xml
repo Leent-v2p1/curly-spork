@@ -1,0 +1,167 @@
+<workflow-app name="masspers-prod-erib-${instanceName}-datamarts" xmlns="uri:oozie:workflow:0.4">
+    <global>
+        <configuration>
+            <property>
+                <name>mapred.job.queue.name</name>
+                <value>${yarnQueue}</value>
+            </property>
+        </configuration>
+    </global>
+
+    <start to="validate-ctl-version"/>
+
+    <action name="validate-ctl-version">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/utils/common/validate-ctl-version</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="parallelDatamart"/>
+        <error to="kill"/>
+    </action>
+
+    <fork name="parallelDatamart">
+        <path start="create-sbol-receiver"/>
+        <path start="create-sbol-bki"/>
+        <path start="create-sbol-cat-det-transactions"/>
+        <path start="create-sbol-cat-det-transactions-hist"/>
+        <path start="create-sbol-budget"/>
+        <path start="create-sbol-offer-feedbacks"/>
+        <path start="create-sbol-credit-products"/>
+        <path start="create-sbol-credit-product-appl"/>
+        <path start="create-sbol-smartphone-pay"/>
+        <path start="create-sbol-sender-responses"/>
+        <path start="create-sbol-sav-goal"/>
+        <path start="create-sbol-device"/>
+    </fork>
+    <join name="joinDatamart" to="decision"/>
+    <decision name="decision">
+        <switch>
+            <case to="kill">${not empty wf:lastErrorNode()}</case>
+            <default to="end"/>
+        </switch>
+    </decision>
+
+    <action name="create-sbol-receiver">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-receiver-${instanceName}-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinDatamart"/>
+        <error to="joinDatamart"/>
+    </action>
+
+    <action name="create-sbol-bki">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-bki-${instanceName}-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinDatamart"/>
+        <error to="joinDatamart"/>
+    </action>
+
+    <action name="create-sbol-cat-det-transactions">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-cat-detailed-transactions-${instanceName}-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinDatamart"/>
+        <error to="joinDatamart"/>
+    </action>
+
+    <action name="create-sbol-cat-det-transactions-hist">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-cat-detailed-transactions-hist-${instanceName}-wf
+            </app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinDatamart"/>
+        <error to="joinDatamart"/>
+    </action>
+
+    <action name="create-sbol-sav-goal">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-sav-goal-${instanceName}-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinDatamart"/>
+        <error to="joinDatamart"/>
+    </action>
+
+    <action name="create-sbol-offer-feedbacks">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-offer-feedbacks-${instanceName}-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinDatamart"/>
+        <error to="joinDatamart"/>
+    </action>
+
+    <action name="create-sbol-budget">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-budget-${instanceName}-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinDatamart"/>
+        <error to="joinDatamart"/>
+    </action>
+
+    <action name="create-sbol-sender-responses">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-fund-sender-responses-${instanceName}-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinDatamart"/>
+        <error to="joinDatamart"/>
+    </action>
+
+    <action name="create-sbol-credit-products">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-credit-products-${instanceName}-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinDatamart"/>
+        <error to="joinDatamart"/>
+    </action>
+
+    <action name="create-sbol-credit-product-appl">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-credit-product-appl-${instanceName}-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinDatamart"/>
+        <error to="joinDatamart"/>
+    </action>
+
+    <action name="create-sbol-smartphone-pay">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-smartphone-pay-${instanceName}-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinDatamart"/>
+        <error to="joinDatamart"/>
+    </action>
+
+    <action name="create-sbol-device">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-device-${instanceName}-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinDatamart"/>
+        <error to="joinDatamart"/>
+    </action>
+
+    <action name="erib-instance-view-creator">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-erib-instance-view-creator-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="end"/>
+        <!--Ignore to prevent error of parallel instances view creating-->
+        <error to="end"/>
+    </action>
+
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

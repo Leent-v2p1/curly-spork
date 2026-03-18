@@ -1,0 +1,67 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0
+                      http://maven.apache.org/xsd/settings-1.2.0.xsd">
+
+    <servers>
+        <server>
+            <id>public</id>
+            <username>${datacloud.nexus.user}@delta.sbrf.ru</username>
+            <password>${datacloud.nexus.password}</password>
+        </server>
+        <server>
+            <id>internal</id>
+            <username>${datacloud.nexus.user}@delta.sbrf.ru</username>
+            <password>${datacloud.nexus.password}</password>
+        </server>
+        <server>
+            <id>lib-release</id>
+            <username>${datacloud.nexus.user}@delta.sbrf.ru</username>
+            <password>${datacloud.nexus.password}</password>
+        </server>
+        <server>
+            <id>lib-dev</id>
+            <username>${datacloud.nexus.user}@delta.sbrf.ru</username>
+            <password>${datacloud.nexus.password}</password>
+        </server>
+    </servers>
+
+    <profiles>
+        <profile>
+            <id>default</id>
+            <repositories>
+                <repository>
+                    <id>public</id>
+                    <url>https://nexus-ci.delta.sbrf.ru/repository/public/</url>
+                </repository>
+                <repository>
+                    <id>internal</id>
+                    <url>https://nexus-ci.delta.sbrf.ru/repository/maven-lib-int/</url>
+                </repository>
+                <repository>
+                    <id>lib-release</id>
+                    <url>https://nexus-ci.delta.sbrf.ru/repository/maven-lib-release/</url>
+                </repository>
+                <repository>
+                    <id>lib-dev</id>
+                    <url>https://nexus-ci.delta.sbrf.ru/repository/maven-lib-dev/</url>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>public</id>
+                    <url>https://nexus-ci.delta.sbrf.ru/repository/public/</url>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>internal</id>
+                    <url>https://nexus-ci.delta.sbrf.ru/repository/maven-lib-int/</url>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>default</activeProfile>
+    </activeProfiles>
+
+</settings>

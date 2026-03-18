@@ -1,0 +1,54 @@
+<workflow-app name="masspers-erib-sbol-logon-launcher-datamarts" xmlns="uri:oozie:workflow:0.4">
+    <global>
+        <configuration>
+            <property>
+                <name>mapred.job.queue.name</name>
+                <value>${yarnQueue}</value>
+            </property>
+            <property>
+                <name>mapreduce.map.memory.mb</name>
+                <value>64000</value>
+            </property>
+            <property>
+                <!-- Amount of physical memory, than can be allocated for yarn containers (default is 8192)
+                The value increased so that driverMemory + driverMemoryOverhead < yarn.nodemanager.resource.memory-mb -->
+                <name>oozie.launcher.yarn.nodemanager.resource.memory-mb</name>
+                <value>90000</value>
+            </property>
+            <property>
+                <name>oozie.launcher.mapreduce.map.memory.mb</name>
+                <value>90000</value>
+            </property>
+            <property>
+               <name>oozie.launcher.mapreduce.reduce.memory.mb</name>
+                <value>90000</value>
+            </property>
+
+        </configuration>
+    </global>
+
+    <start to="validate-ctl-version"/>
+
+    <action name="validate-ctl-version">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/utils/common/validate-ctl-version</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="create-sbol-logon-launcher"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="create-sbol-logon-launcher">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-logon-launcher-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

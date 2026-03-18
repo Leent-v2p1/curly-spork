@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>personalization-internal</artifactId>
+        <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+        <version>1.0.2</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>datamart-release</artifactId>
+
+    <dependencies>
+
+        <!-- AuditLog Dependencies -->
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.17.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.sdinfosec.sdlogging</groupId>
+            <artifactId>http_appender</artifactId>
+            <version>D-01.001.12</version>
+            <classifier>distrib</classifier>
+        </dependency>
+
+        <!--etl dependencies-->
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>datamart-common</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-eikp</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-way4</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-cod</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-erib</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-ekp</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-saving-certificate</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-smartvista</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-spoobk</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-stoplist</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-rb-triggers</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-risk-triggers</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-scoring-platform</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-yandexmarket</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-clickstream</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-tcurs</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-rozn-client-aggr</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-greenplum</artifactId>
+            <version>1.0.2</version>
+            <classifier>sql</classifier>
+        </dependency>
+
+        <!--etl resources dependencies-->
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>datamart-common</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-eikp</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-way4</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-cod</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-erib</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-ekp</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-saving-certificate</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-smartvista</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-spoobk</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-stoplist</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-rb-triggers</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-risk-triggers</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-scoring-platform</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-yandexmarket</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-clickstream</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-tcurs</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-rozn-client-aggr</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.sberbank.bigdata.cloud.rb</groupId>
+            <artifactId>etl-greenplum</artifactId>
+            <version>1.0.2</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>personalization</finalName>
+        <plugins>
+            <!--add resources from all modules-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-share-resources</id>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <includeGroupIds>${project.groupId}</includeGroupIds>
+                            <includeClassifiers>resources</includeClassifiers>
+                            <excludeTransitive>true</excludeTransitive>
+                            <excludes>**/generation/**,**/oozie/production/**,**oozie/uat/**</excludes>
+                            <markersDirectory>${project.build.directory}/default_markers</markersDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>unpack-production-workflows</id>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/${oozie-wf.temp.production-workflows}
+                            </outputDirectory>
+                            <includes>**/oozie/production/**</includes>
+                            <markersDirectory>${project.build.directory}/production_markers</markersDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>unpack-uat-workflows</id>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <includes>**/oozie/uat/**</includes>
+                            <markersDirectory>${project.build.directory}/uat_markers</markersDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-module-jars</id>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/jars</outputDirectory>
+                            <stripVersion>true</stripVersion>
+                            <includeGroupIds>ru.sberbank.bigdata.cloud.rb</includeGroupIds>
+                            <includeScope>runtime</includeScope>
+                            <excludeArtifactIds>datamart-common,generator-api,generator-impl,ctl-rest</excludeArtifactIds>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- compile personalization.jar-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>personalization</finalName>
+                            <outputFile>${project.build.directory}/jars/personalization.jar</outputFile>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Main-Class>
+                                            ru.sberbank.bigdata.cloud.rb.internal.sources.common.service.FillTemplate
+                                        </Main-Class>
+                                        <Implementation-Title>${project.name}</Implementation-Title>
+                                        <Implementation-Version>${project.version}</Implementation-Version>
+                                    </manifestEntries>
+                                </transformer>
+                            </transformers>
+                            <artifactSet>
+                                <includes>
+                                    <include>ru.sberbank.bigdata.cloud.rb:*</include>
+                                    <include>org.projectlombok:lombok</include>
+                                    <include>org.json:json</include>
+                                    <include>com.google.code.gson:gson</include>
+                                    <include>com.squareup.retrofit2:retrofit</include>
+                                    <include>com.squareup.retrofit2:converter-moshi</include>
+                                    <include>com.squareup.moshi:moshi</include>
+                                    <include>com.squareup.okhttp3:okhttp</include>
+                                    <include>com.squareup.okhttp3:logging-interceptor</include>
+                                    <include>com.squareup.okio:okio</include>
+                                    <include>com.databricks:spark-csv_${scala.version}</include>
+                                    <include>org.apache.commons:commons-csv</include>
+                                    <include>org.freemarker:freemarker</include>
+                                    <include>io.dropwizard.metrics:metrics-graphite</include>
+                                    <include>io.dropwizard.metrics:metrics-core</include>
+                                    <include>org.yaml:snakeyaml</include>
+<!--                                    <include>org.apache.hive:hive-jdbc</include>-->
+<!--                                    <include>org.apache.hive:hive-service</include>-->
+                                    <include>commons-io:commons-io</include>
+                                    <include>ru.sberbank.sdinfosec.sdlogging:http_appender</include>
+                                    <include>org.apache.spark:spark-sql-kafka-0-10_${scala.version}</include>
+                                    <include>org.apache.kafka:kafka-clients</include>
+                                    <include>org.apache.spark:spark-token-provider-kafka-0-10_${scala.version}</include>
+                                    <include>org.apache.spark:spark-tags_${scala.version}</include>
+                                    <include>org.apache.commons:commons-pool2</include>
+                                </includes>
+                            </artifactSet>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exlude>META-INF/*</exlude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>ru.sberbank.bigdata.cloud.rb:*</artifact>
+                                    <includes>
+                                        <include>ru/sberbank/bigdata/cloud/rb/**</include>
+                                        <include>templates/**</include>
+                                        <include>catalogs/**</include>
+                                        <include>views/**</include>
+                                        <include>replica-properties.yaml</include>
+                                        <include>datamart-properties.yaml</include>
+                                    </includes>
+                                    <excludes>
+                                        <exclude>ru/sberbank/bigdata/cloud/rb/internal/sources/datamart/**</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>ru.sberbank.sdinfosec.sdlogging:http_appender</artifact>
+                                    <excludes>
+                                        <exclude>com/fasterxml/**</exclude>
+                                        <exclude>META-INF/maven/**</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>build-default</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>
+                                ru.sberbank.bigdata.cloud.rb.internal.sources.generator.impl.develop.DefaultBuild
+                            </mainClass>
+                            <systemProperties>
+                                <systemProperty>
+                                    <key>project.basedir</key>
+                                    <value>${project.basedir}</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <key>build.timestamp</key>
+                                    <value>${build.timestamp}</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <key>activeProfiles</key>
+                                    <value>
+                                        ${production.profile},${production_test.profile}
+                                    </value>
+                                </systemProperty>
+                            </systemProperties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- copy to oozie-app/develop -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>fix-crlf-develop</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <!--fixcrlf distribution-->
+                                <fixcrlf srcdir="${project.build.directory}/distribution_${build.timestamp}/oozie-app"
+                                         includes="**/*.sh,**/*.properties" eol="lf"/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <descriptor>src/main/assembly/distribution-assembly-conf.xml</descriptor>
+                    <finalName>distribution_${build.timestamp}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>zip-distribution</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>production</id>
+            <properties>
+                <production.profile>production</production.profile>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>production_test</id>
+            <properties>
+                <production_test.profile>production_test</production_test.profile>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>cloudera_5_14</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.4.0</version>
+                        <executions>
+                            <execution>
+                                <id>workflow-adjuster</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                                <configuration>
+                                    <mainClass>
+                                        ru.sberbank.bigdata.cloud.rb.internal.sources.generator.impl.appenders.WorkflowVersionAdjuster
+                                    </mainClass>
+                                    <systemProperties>
+                                        <systemProperty>
+                                            <key>build.dir</key>
+                                            <value>${project.build.directory}</value>
+                                        </systemProperty>
+                                    </systemProperties>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

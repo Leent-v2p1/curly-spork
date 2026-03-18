@@ -1,0 +1,279 @@
+memoryPreset:
+  val1: &LOWEST "LOWEST" #  8 executors x 2G
+  val1: &LOW "LOW"       # 20 executors x 2G
+  val2: &MID "MID"       # 40 executors x 4G
+  val3: &HIGH "HIGH"     # 80 executors x 8G
+
+custom_rb_card_stg:
+  acnt_contract:
+    type: history_stage
+    replicaSnapshotTable: internal_way4_ows.acnt_contract
+  appl_product:
+    type: history_stage
+    replicaSnapshotTable: internal_way4_ows.appl_product
+  f_i:
+    type: history_stage
+    replicaSnapshotTable: internal_way4_ows.f_i
+  doc:
+    type: history_stage
+    memoryPreset: *MID
+    replicaSnapshotTable: internal_way4_ows.doc
+  card_info:
+    type: history_stage
+    replicaSnapshotTable: internal_way4_ows.card_info
+  account:
+    type: history_stage
+    replicaSnapshotTable: internal_way_ows.account
+  account_type:
+    type: history_stage
+    replicaSnapshotTable: internal_way_ows.account_type
+  tariff:
+    type: history_stage
+    replicaSnapshotTable: internal_way_ows.tariff
+  tariff_data:
+    type: history_stage
+    replicaSnapshotTable: internal_way_ows.tariff_data
+  tariff_domain:
+    type: history_stage
+    replicaSnapshotTable: internal_way_ows.tariff_domain
+
+
+custom_rb_loan_stg:
+  z_pr_cred:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_pr_cred
+  z_vid_oper_dog:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_vid_oper_dog
+  z_cl_group:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_cl_group
+  z_client:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_client
+  z_fact_oper:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_fact_oper
+  z_depart:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_depart
+  z_subbranch:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_subbranch
+  z_param_for_plan:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_param_for_plan
+  z_int_uic:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_int_uic
+  z_ac_fin:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_ac_fin
+  z_debtors:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_debtors
+  z_kind_credits:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_kind_credits
+  z_ft_money:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_ft_money
+  z_product:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_product
+  z_debt_comiss_prc:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_debt_comiss_prc
+  z_prc_scheme:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_prc_scheme
+  z_arc_sch_prc:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_arc_sch_prc
+  z_vid_debt:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_vid_debt
+  z_object_cred:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_object_cred
+  z_obj_kred:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_obj_kred
+  z_st_kind_cr:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_st_kind_cr
+  z_ps_vid:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_ps_vid
+  z_decl_on_get_cred:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_decl_on_get_cred
+  z_part_to_loan:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_part_to_loan
+  z_zalog:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_zalog
+  z_zalog_body:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_zalog_body
+  z_insurance_info:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_insurance_info
+  z_rely_categories:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_rely_categories
+  z_branch:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_branch
+  z_com_status_prd:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_com_status_prd
+  z_types_cred:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_types_cred
+  z_cred_insure:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_cred_insure
+  z_rest_data_cred:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_psdp_ekp_reports_internal_ekp_reports_ibs.z_rest_data_cred
+  ru_sber_cb_ekp_applog_z_pr_cred:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_pr_cred
+  ru_sber_cb_ekp_applog_z_vid_oper_dog:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_vid_oper_dog
+  ru_sber_cb_ekp_applog_z_cl_group:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_cl_group
+  ru_sber_cb_ekp_applog_z_client:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_client
+  ru_sber_cb_ekp_applog_z_fact_oper:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_fact_oper
+  ru_sber_cb_ekp_applog_z_depart:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_depart
+  ru_sber_cb_ekp_applog_z_subbranch:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_subbranch
+  ru_sber_cb_ekp_applog_z_param_for_plan:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_param_for_plan
+  ru_sber_cb_ekp_applog_z_int_uic:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_int_uic
+  ru_sber_cb_ekp_applog_z_ac_fin:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_ac_fin
+  ru_sber_cb_ekp_applog_z_debtors:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_debtors
+  ru_sber_cb_ekp_applog_z_kind_credits:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_kind_credits
+  ru_sber_cb_ekp_applog_z_ft_money:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_ft_money
+  ru_sber_cb_ekp_applog_z_product:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_product
+  ru_sber_cb_ekp_applog_z_debt_comiss_prc:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_debt_comiss_prc
+  ru_sber_cb_ekp_applog_z_prc_scheme:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_prc_scheme
+  ru_sber_cb_ekp_applog_z_arc_sch_prc:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_arc_sch_prc
+  ru_sber_cb_ekp_applog_z_vid_debt:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_vid_debt
+  ru_sber_cb_ekp_applog_z_object_cred:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_object_cred
+  ru_sber_cb_ekp_applog_z_obj_kred:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_obj_kred
+  ru_sber_cb_ekp_applog_z_st_kind_cr:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_st_kind_cr
+  ru_sber_cb_ekp_applog_z_ps_vid:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_ps_vid
+  ru_sber_cb_ekp_applog_z_decl_on_get_cred:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_decl_on_get_cred
+  ru_sber_cb_ekp_applog_z_part_to_loan:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_part_to_loan
+  ru_sber_cb_ekp_applog_z_zalog:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_zalog
+  ru_sber_cb_ekp_applog_z_zalog_body:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_zalog_body
+  ru_sber_cb_ekp_applog_z_insurance_info:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_insurance_info
+  ru_sber_cb_ekp_applog_z_rely_categories:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_rely_categories
+  ru_sber_cb_ekp_applog_z_branch:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_branch
+  ru_sber_cb_ekp_applog_z_com_status_prd:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_com_status_prd
+  ru_sber_cb_ekp_applog_z_types_cred:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_types_cred
+  ru_sber_cb_ekp_applog_z_cred_insure:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_cred_insure
+  ru_sber_cb_ekp_applog_z_rest_data_cred:
+    type: history_stage
+    replicaSnapshotTable: prx_hdp2_ekp_platform_ekp_applog_replication.ru_sber_cb_ekp_applog_z_rest_data_cred
+  z_decl_kk_potreb:
+    type: history_stage
+    replicaSnapshotTable: internal_vis_ekp_ibs
+
+custom_rb_spoobk_stg:
+  credit_card_form:
+    type: history_stage
+    replicaSnapshotTable: internal_spoobk2_spoobk.credit_card_form
+
+custom_rb_saving_certificate_stg:
+  t_billoper:
+    type: history_stage
+    replicaSnapshotTable: internal_infobank_dbo.t_billoper
+  t_billoperblank:
+    type: history_stage
+    replicaSnapshotTable: internal_infobank_dbo.t_billoperblank
+  t_blank:
+    type: history_stage
+    replicaSnapshotTable: internal_infobank_dbo.t_blank
+  t_blanktype:
+    type: history_stage
+    replicaSnapshotTable: internal_infobank_dbo.t_blanktype
+  t_clientmain:
+    type: history_stage
+    replicaSnapshotTable: internal_infobank_dbo.t_clientmain
+  t_billpayprop:
+    type: history_stage
+    replicaSnapshotTable: internal_infobank_dbo.t_billpayprop
+  t_bankmain:
+    type: history_stage
+    replicaSnapshotTable: internal_infobank_dbo.t_bankmain
+  t_dirsubbranch:
+    type: history_stage
+    replicaSnapshotTable: internal_infobank_dbo.t_dirsubbranch
+  t_bill:
+    type: history_stage
+    replicaSnapshotTable: internal_infobank_dbo.t_bill
+  t_course:
+    type: history_stage
+    replicaSnapshotTable: internal_infobank_dbo.t_course

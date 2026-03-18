@@ -1,0 +1,10 @@
+custom_rb_sbol:
+  sbol_logon_ikfl6:
+    type: datamart
+    class: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.erib.SbolLogon
+    montlyDependencyDay: 1
+    ctl.entity.id: 901031302
+    sourceSchema: internal_erib_srb_ikfl6
+    customJavaOpts:
+      repartition: enabled
+      spark.memory.fraction: 0.5

@@ -1,0 +1,18 @@
+- name: custom_rb_sbol.sbol_oper_ikfl
+  type: sub-wf
+  dependencies:
+    - fork:
+        name: card-stages
+        branches: [custom_rb_card_stg.mdm_source_stg, card-catalogs]
+    - custom_rb_card.card_reasons
+    - custom_rb_card.card
+  start: true
+- name: custom_rb_card_stg.mdm_source_stg
+  type: sub-wf
+- name: card-catalogs
+  type: sub-wf
+  appPath: /oozie-app/wf/custom/rb/uat/way4/catalogs
+- name: custom_rb_card.card
+  type: sub-wf
+- name: custom_rb_card.card_reasons
+  type: sub-wf

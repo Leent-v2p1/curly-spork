@@ -1,0 +1,53 @@
+<workflow-app name="create-view-${viewName}" xmlns="uri:oozie:workflow:0.4">
+    <credentials>
+        <credential name='howlauth' type='hcat'>
+            <property>
+                <name>hcat.metastore.uri</name>
+                <value>${hiveMetastoreUri}</value>
+            </property>
+            <property>
+                <name>hcat.metastore.principal</name>
+                <value>${principal}</value>
+            </property>
+        </credential>
+    </credentials>
+    <start to="create-view"/>
+
+    <action name="create-view" cred="howlauth">
+        <spark xmlns="uri:oozie:spark-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <master>yarn-cluster</master>
+            <mode>cluster</mode>
+            <name>Create view ${viewName}</name>
+            <class>ru.sberbank.bigdata.cloud.rb.internal.sources.common.service.view.DatamartCreateView</class>
+            <jar>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/jars/personalization.jar</jar>
+            <spark-opts>
+                --num-executors 1
+                --executor-memory 2G
+                --driver-memory 2G
+                --queue ${yarnQueue}
+                --files ${nameNode}/oozie-app/wf/custom/rb/production/utils/common/custom-log4j.properties,${nameNode}${keytabPath}
+                --conf spark.driver.extraJavaOptions=
+                    -Dlog4j.configuration=custom-log4j.properties
+                    -Dspark.keytabPath=${replaceAll(keytabPath, '/keytab/', '')}
+                    -Dhive.metastore.uris=${hiveMetastoreUri}
+                    -Dspark.yarn.executor.memoryOverhead=400
+                    -Dspark.yarn.driver.memoryOverhead=400
+                    -Dspark.view.name=${viewName}
+                    -Dspark.ctl.url=${ctl}
+                    -Dspark.ctl.loading.id=${loading_id}
+                    -Dhive.metastore.sasl.enabled=true
+                    -Dspark.properties.path=${propertiesPath}
+                    -Dspark.environment=${environment}
+            </spark-opts>
+        </spark>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

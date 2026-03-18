@@ -1,0 +1,24 @@
+[
+  {
+    "formatVersion": "1.0.1",
+    "service": {
+      "groupId": "ru.sberbank.bigdata.cloud.rb",
+      "artifactId": "personalization-internal",
+      "version": "01.011.07-55",
+      "name": "Массовая персонализация. Создание витрин для РБ.",
+      "dcaId": "SYS602.26"
+    },
+    "dependencies": [
+      {
+        "groupId": "ru.sberbank.bigdata",
+        "artifactId": "CTL_11",
+        "version": [
+          {
+            "min": "sprint_6"
+          }
+        ]
+      }
+    ],
+    "dependenciesComment": "В зависимостях необходимо перечислить все Артефакты ИТ ландшафта, с которыми необходимо взаимодействие данного сервиса."
+  }
+]

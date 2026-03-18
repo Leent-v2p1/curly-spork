@@ -1,0 +1,63 @@
+- name: custom_rb_card.agrmnt_mnth
+  type: datamart
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.AgreementAggregate
+  dependencies:
+    - fork:
+        name: custom_rb_card.agrmnt_mnth_main_fork
+        branches:
+          - custom_rb_card.txn_mnth_flags
+          - custom_rb_card.agrmnt_mnth_txnsum
+          - custom_rb_card.agrmnt_mnth_like
+          - custom_rb_card.agrmnt_mnth_agrmnt_card_fields
+    - custom_rb_card.agrmnt_mnth_without_history
+- name: custom_rb_card.txn_mnth_flags
+  type: stage
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.TxnFlags
+  dependencies:
+    - fork:
+        name: custom_rb_card.agrmnt_mnth_flags_fork
+        branches: [custom_rb_card.agrmnt_mnth_base_fields, custom_rb_card.agrmnt_mnth_flags]
+- name: custom_rb_card.agrmnt_mnth_base_fields
+  type: stage
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.BaseFieldsFromAcntContract
+- name: custom_rb_card.agrmnt_mnth_flags
+  type: stage
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.AgreementFlags
+- name: custom_rb_card.agrmnt_mnth_txnsum
+  type: stage
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.TxnSum
+  dependencies:
+    - fork:
+        name: agrmnt_mnth_txn_fork
+        branches: [custom_rb_card.agrmnt_mnth_txn5, custom_rb_card.agrmnt_mnth_txn7, custom_rb_card.agrmnt_mnth_txn3, custom_rb_card.agrmnt_mnth_txn6, custom_rb_card.agrmnt_mnth_txn4, custom_rb_card.agrmnt_mnth_txn2, custom_rb_card.agrmnt_mnth_txn1]
+- name: custom_rb_card.agrmnt_mnth_txn5
+  type: stage
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.Txn5
+- name: custom_rb_card.agrmnt_mnth_txn7
+  type: stage
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.Txn7
+- name: custom_rb_card.agrmnt_mnth_txn3
+  type: stage
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.Txn3
+- name: custom_rb_card.agrmnt_mnth_txn6
+  type: stage
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.Txn6
+- name: custom_rb_card.agrmnt_mnth_txn4
+  type: stage
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.Txn4
+- name: custom_rb_card.agrmnt_mnth_txn2
+  type: stage
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.Txn2
+- name: custom_rb_card.agrmnt_mnth_txn1
+  type: stage
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.Txn1
+- name: custom_rb_card.agrmnt_mnth_like
+  type: stage
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.SumCurrentBalance
+  sourceSchema: internal_way4_ows
+- name: custom_rb_card.agrmnt_mnth_agrmnt_card_fields
+  type: stage
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.AgreementJoinCard
+- name: custom_rb_card.agrmnt_mnth_without_history
+  type: stage
+  className: ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.card.agreement_aggregate.MainClass

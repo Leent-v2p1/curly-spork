@@ -1,0 +1,36 @@
+<workflow-app name="validate-ctl-version" xmlns="uri:oozie:workflow:0.4">
+    <global>
+        <configuration>
+            <property>
+                <name>mapred.job.queue.name</name>
+                <value>${yarnQueue}</value>
+            </property>
+            <property>
+                <name>oozie.launcher.mapreduce.user.classpath.first</name>
+                <value>true</value>
+            </property>
+        </configuration>
+    </global>
+    <start to="validate-ctl-version"/>
+
+    <action name="validate-ctl-version">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>ru.sberbank.bigdata.cloud.rb.internal.sources.common.service.CtlVersionValidator</main-class>
+            <java-opt>-Dctl.url=${ctl_secure}</java-opt>
+            <java-opt>-Dctl.version.required='${ctlVersionRequired}'</java-opt>
+            <java-opt>-Dspark.ctl.api.version.v5=${firstNotNull(wf:conf('ctlApiVersionV5'), 'false')}</java-opt>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/jars/personalization.jar#personalization.jar</file>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/common/validate-ctl-version/jaas_${wf:conf('user.name')}.conf#jaas.conf</file>
+            <file>${keytabPath}</file>
+        </java>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

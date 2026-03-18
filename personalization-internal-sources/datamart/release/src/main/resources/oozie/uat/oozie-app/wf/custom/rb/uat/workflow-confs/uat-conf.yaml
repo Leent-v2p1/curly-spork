@@ -1,0 +1,16 @@
+- name: drop-tables
+  type: sub-wf
+  appPath: /oozie-app/wf/custom/rb/uat/way4/generated/create-drop-database-custom-rb-card-tables-wf
+- name: custom_rb_card.card
+  type: sub-wf
+  dependencies:
+    - drop-tables
+    - fork:
+        name: card-stages
+        branches: [custom_rb_card_stg.mdm_source_stg, card-catalogs]
+  start: true
+- name: custom_rb_card_stg.mdm_source_stg
+  type: sub-wf
+- name: card-catalogs
+  type: sub-wf
+  appPath: /oozie-app/wf/custom/rb/uat/way4/catalogs

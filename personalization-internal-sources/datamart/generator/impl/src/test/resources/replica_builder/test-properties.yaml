@@ -1,0 +1,9 @@
+production:
+  jarPath: ${nameNode}/oozie-app/wf/custom/rb/production/utils/common/jars/personalization.jar
+production_test:
+  jarPath: ${nameNode}/oozie-app/wf/custom/rb/production_test/utils/common/jars/personalization.jar
+
+schema_name_stg:
+  table_name:
+    type: datamart
+    period: day

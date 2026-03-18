@@ -1,0 +1,12 @@
+custom_rb_autopay:
+  ap_txn:
+    type: datamart
+    sourceReplicaTables: [a, b]
+  payee:
+    type: datamart
+    sourceReplicaTables: [b, c]
+
+custom_rb_test:
+  test1:
+    type: datamart
+    sourceReplicaTables: [ac, bd]

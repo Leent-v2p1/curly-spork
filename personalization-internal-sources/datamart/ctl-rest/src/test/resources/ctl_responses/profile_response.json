@@ -1,0 +1,48 @@
+{
+  "bmeServiceUri": "https://bme.dev.df.sbrf.ru:44399",
+  "description": "Ambari: http://tklis-mvp001315.dev.df.sbrf.ru:8080",
+  "hueUri": "http://tklis-mvp001317.vm.mos.cloud.sbrf.ru:8888",
+  "id": 697,
+  "locked": false,
+  "name": "devsklsdprozn",
+  "oozieUri": "http://tklis-mvp001316.dev.df.sbrf.ru:11000/oozie",
+  "param": [
+    {
+      "param": "hiveJdbcUrl",
+      "prior_value": "jdbc:hive2://tklis-mvp001315.dev.df.sbrf.ru:2181,tklis-mvp001317.dev.df.sbrf.ru:2181,tklis-mvp001316.dev.df.sbrf.ru:2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2",
+      "profile": "devsklsdprozn"
+    },
+    {
+      "param": "hueUrl",
+      "prior_value": "http://tklis-mvp001317.vm.mos.cloud.sbrf.ru:8888",
+      "profile": "devsklsdprozn"
+    },
+    {
+      "param": "jobTracker",
+      "prior_value": "yarn-cluster:8032",
+      "profile": "devsklsdprozn"
+    },
+    {
+      "param": "nameNode",
+      "prior_value": "hdfs://devsklsdprozn/",
+      "profile": "devsklsdprozn"
+    },
+    {
+      "param": "oozie",
+      "prior_value": "http://tklis-mvp001316.dev.df.sbrf.ru:11000/oozie",
+      "profile": "devsklsdprozn"
+    },
+    {
+      "param": "yarn.uri",
+      "prior_value": "http://tklis-mvp001317.dev.df.sbrf.ru:8088",
+      "profile": "devsklsdprozn"
+    },
+    {
+      "param": "dq.url.cap.meta",
+      "prior_value": "https://tkli-ahd0013.dev.df.sbrf.ru:48098/any?putMode=1",
+      "profile": "devsklsdprozn"
+    }
+  ],
+  "replica": false,
+  "yarnUri": "http://tklis-mvp001317.dev.df.sbrf.ru:8088"
+}

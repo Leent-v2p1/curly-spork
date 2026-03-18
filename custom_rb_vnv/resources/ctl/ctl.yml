@@ -1,0 +1,282 @@
+
+templates:
+  #entity_hdfs: &ctlEntityHdfs    { storage: "HDFS" }
+  entity_hive: &ctlEntityHive    { storage: "HIVE" }
+  check_lock: &ctlCheckLockInit { lock: READ, lock_group: INIT, profile: "{{global.CTL_PROFILE_NAME}}" }
+  set_lock_read: &ctlSetLockRead   { lock: READ, estimate: 5, lock_group: INIT, profile: "{{global.CTL_PROFILE_NAME}}" }
+  set_lock_write: &ctlSetLockWrite  { lock: WRITE, estimate: 5, lock_group: INIT, profile: "{{global.CTL_PROFILE_NAME}}" }
+  wf_info: &wfDefaultInfo
+    {
+      type: principal,
+      orchestrator: oozie,
+      singleLoading: true,
+      profile: "{{global.CTL_PROFILE_NAME}}",
+      link_stats: [ 2, 5, 10, 11, 34 ]
+    }
+  wf_params:
+    - &wfDefaultParam__sber_sql_engine_default
+      param: { name: b2c.sql.engine.default, prior_value: "spark" }
+    - &wfDefaultParam__kibana_app_id
+      param: { name: kibana.app.id, prior_value: "{{mart.kibana_app_id}}"  }
+    - &wfDefaultParam__ctl_root_category_name
+      param: { name: ctl.root.category.name, prior_value: "p1030" }
+    - &wfDefaultParam__secman_conf_hdfs_path
+      param: { name: b2c.sql.secman.conf.hdfs.path, prior_value: "{{mart.secman_conf_hdfs_path}}" }
+    - &wfDefaultParam__app_version
+      param: { name: app.version, prior_value: "{{devops.version}}" }
+    - &wfDefaultParam__app_version_oozie
+      param: { name: app_version, prior_value: "{{devops.version}}" }
+    - &wfDefaultParam__app_upload_lastUpdateTime
+      param: { name: app.upload.lastUpdateTime, prior_value: "{{ now() }}" }
+    - &wfDefaultParam__user_name
+      param: { name: user.name, prior_value: "{{mart.USER_NAME}}" }
+    - &wfDefaultParam__mapreduce_job_queuename
+      param: { name: mapreduce.job.queuename, prior_value: "{{mart.YARN_QUEUE}}" }
+    - &wfDefaultParam__mapreduce_map_memory_mb
+      param: { name: mapreduce.map.memory.mb, prior_value: 16384 }
+    - &wfDefaultParam__yarn_app_mapreduce_am_resource_mb
+      param: { name: yarn.app.mapreduce.am.resource.mb, prior_value: 16384 }
+    - &wfDefaultParam__sber_sql_java_xmx
+      param: { name: b2c.sql.java.xmx, prior_value: "8192M" }
+    - &wfDefaultParam__sber_sql_conf_path
+      param: { name: b2c.sql.conf.path, prior_value: "{{mart.hdfs_path_app_full}}/conf/external/external.conf" }
+    - &wfDefaultParam__sber_sql_spark_deploy
+      param: { name: b2c.sql.engine.spark.deploy, prior_value: "{{sber_sql_spark_deploy}}" }
+    - &wfDefaultParam__oozie_wf_application_path
+      param: { name: oozie.wf.application.path, prior_value: "hdfs:///oozie-app/b2c/fw/b2c-sql/{{mart.sber_sql_version}}" }
+    - &wfDefaultParam__spark_executor_extraJavaOptions
+      param: { name: b2c.sql.engine.spark.executor.extraJavaOptions, prior_value: "{{mart.spark_executor_extraJavaOptions}}" }
+    - &wfDefaultParam__spark_driver_extraJavaOptions
+      param: { name: b2c.sql.engine.spark.driver.extraJavaOptions, prior_value: "{{mart.spark_driver_extraJavaOptions}}" }
+    - &wfParam-CI
+      param: { name: CI, prior_value: "{{mart.name_official}}" }
+    - &wfParam-DEV_TEAM_EMAIL
+      param: { name: DEV_TEAM_EMAIL , prior_value: "{{mart.notifications_emails}}" }
+    - &wfParam-spark_submit_cmd
+      param: { name: b2c.sql.engine.spark.cmd, prior_value: "${spark_submit_cmd_main} ${spark_submit_cmd_high}" }
+    - &wfParam-spark_submit_cmd_main
+      param: { name: spark_submit_cmd_main, prior_value: "{{mart.spark_submit_cmd_main}}" }
+    - &wfParam-spark_submit_cmd_low
+      param: { name: spark_submit_cmd_low, prior_value: "{{mart.spark_submit_cmd_low}}" }
+    - &wfParam-spark_submit_cmd_mid
+      param: { name: spark_submit_cmd_mid, prior_value: "{{mart.spark_submit_cmd_mid}}" }
+    - &wfParam-spark_submit_cmd_high
+      param: { name: spark_submit_cmd_high, prior_value: "{{mart.spark_submit_cmd_high}}" }
+    - &wfParam-spark_submit_cmd_super_high
+      param: { name: spark_submit_cmd_super_high, prior_value: "{{mart.spark_submit_cmd_super_high}}" }
+
+
+    - &wfParam-sber_sql_logger_log4j2_xml_path
+      param: { name: b2c.sql.logger.log4j2.xml.path, prior_value: "{{devops.datamart_path_app}}/log4j2.xml" }
+    - &wfParam-sber_sql_external_function_path
+      param: { name: b2c.sql.external.function.path, prior_value: "{{devops.datamart_path_app}}/function" }
+    - &wfParam-sber_sql_external_udf_path
+      param: { name: b2c.sql.external.udf.path, prior_value: "{{devops.datamart_path_app}}/udf" }
+    - &wfParam-sber_sql_log_level
+      param: { name: b2c.sql.log.level, prior_value: "info" }
+    - &notifications_email
+      notifications:
+        - { status: "ERROR", emails: [ "{{mart.notifications_emails}}" ] }
+        - { status: "SUCCESS", emails: [ "{{mart.notifications_emails}}" ] }
+        - { status: "LOCK", emails: [ "{{mart.notifications_emails}}" ] }
+
+    - &wfDefaultParam__DL_D
+      param: { name: DL_D, prior_value: "23:59:00" }
+    - &wfMartParam__src_schema_name
+      param: { name: src_schema_name, prior_value: "{{mart.src_schema_name}}" }
+    - &wfMartParam__parallel_degree
+      param: { name: parallel_degree, prior_value: "1" }
+    - &wfMartParam__is_dev
+      param: { name: is_dev, prior_value: "{{mart.is_dev}}" }
+    - &wfDefaultParams
+      FLATTEN:
+        - *wfDefaultParam__secman_conf_hdfs_path
+        - *wfDefaultParam__sber_sql_engine_default
+        - *wfDefaultParam__kibana_app_id
+        - *wfDefaultParam__ctl_root_category_name
+        - *wfDefaultParam__app_version
+        - *wfDefaultParam__app_upload_lastUpdateTime
+        - *wfDefaultParam__user_name
+        - *wfDefaultParam__mapreduce_job_queuename
+        - *wfDefaultParam__oozie_wf_application_path
+        - *wfDefaultParam__sber_sql_conf_path
+        - *wfDefaultParam__sber_sql_spark_deploy
+        - *wfDefaultParam__spark_executor_extraJavaOptions
+        - *wfDefaultParam__spark_driver_extraJavaOptions
+        - *wfDefaultParam__app_version_oozie
+        - *wfParam-sber_sql_logger_log4j2_xml_path
+        - *wfParam-sber_sql_external_function_path
+        - *wfParam-sber_sql_external_udf_path
+        - *wfParam-CI
+        - *wfParam-DEV_TEAM_EMAIL
+        - *wfParam-spark_submit_cmd
+        - *wfParam-spark_submit_cmd_main
+        - *wfParam-spark_submit_cmd_low
+        - *wfParam-spark_submit_cmd_mid
+        - *wfParam-spark_submit_cmd_high
+        - *wfParam-spark_submit_cmd_super_high
+        - *wfDefaultParam__mapreduce_map_memory_mb
+        - *wfDefaultParam__yarn_app_mapreduce_am_resource_mb
+        - *wfDefaultParam__sber_sql_java_xmx
+        - *wfParam-sber_sql_log_level
+    - &wfMartParams
+      FLATTEN:
+        - *wfMartParam__src_schema_name
+        - *wfMartParam__parallel_degree
+        - *wfMartParam__is_dev
+entities:
+
+  - entity: {
+    parent-id: 0,
+    id: 901411027,
+    name: "ft_prod_sales",
+    path: "/data/custom/rb/greenplum/pa/ft_prod_sales",
+    <<: *ctlEntityHive }
+
+  - entity: {
+    parent-id: 0,
+    id: 901411026,
+    name: "ref_sale_channel",
+    path: "/data/custom/rb/greenplum/pa/ref_sale_channel",
+    <<: *ctlEntityHive }
+
+  - entity: {
+    parent-id: 0,
+    id: 901411024,
+    name: "ref_product_class",
+    path: "/data/custom/rb/greenplum/pa/ref_product_class",
+    <<: *ctlEntityHive }
+
+  - entity: {
+    parent-id: 0,
+    id: 901411023,
+    name: "ref_sale_type",
+    path: "/data/custom/rb/greenplum/pa/ref_sale_type",
+    <<: *ctlEntityHive }
+
+categories:
+
+  - category:
+      name: "p1030"
+      deleted: false
+      parent_id: "0"
+
+  - category:
+      name: "p1030_HDP"
+      deleted: false
+      parent_name: "p1030"
+
+  - category:
+      name: "MsprsHDP1"
+      deleted: false
+      parent_name: "p1030_HDP"
+
+  - category:
+      name: "HDDP1CustomView"
+      deleted: false
+      parent_name: "MsprsHDP1"
+
+workflows:
+  - ft_prod_sales:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-greenplum-prod-sales-daily-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfDefaultParam__DL_D
+        - *wfMartParams
+
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/ft_prod_sales/conf/ft_prod_sales.json
+        - param:
+            name: "description"
+            prior_value: >-
+              "{{wf_prefix}}-greenplum-prod-sales-daily-{{wf_postfix}}"
+        - param: { name: type, prior_value: 'arc' }
+        - param: { name: start_dt, prior_value: '' }
+        - param: { name: end_dt, prior_value: '' }
+
+      link_entities: [ 901411027 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+
+  - ref_sale_channel:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-greenplum-sale-channel-daily-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfDefaultParam__DL_D
+        - *wfMartParams
+
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/ref_sale_channel/conf/ref_sale_channel.json
+        - param:
+            name: "description"
+            prior_value: >-
+              "{{wf_prefix}}-greenplum-sale-channel-daily-{{wf_postfix}}"
+        - param: { name: type, prior_value: 'inc' }
+
+      link_entities: [ 901411026 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+  - ref_product_class:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-greenplum-product-class-daily-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfDefaultParam__DL_D
+        - *wfMartParams
+
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/ref_product_class/conf/ref_product_class.json
+        - param:
+            name: "description"
+            prior_value: >-
+              "{{wf_prefix}}-greenplum-product-class-daily-{{wf_postfix}}"
+        - param: { name: type, prior_value: 'arc' }
+      link_entities: [ 901411024 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+  - ref_sale_type:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-greenplum-sale-type-daily-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfDefaultParam__DL_D
+        - *wfMartParams
+
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/ref_sale_type/conf/ref_sale_type.json
+        - param:
+            name: "description"
+            prior_value: >-
+              "{{wf_prefix}}-greenplum-sale-type-daily-{{wf_postfix}}"
+        - param: { name: type, prior_value: 'arc' }
+
+      link_entities: [ 901411023 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+
+#  - repl:
+#      <<: *wfDefaultInfo
+#      category: "HDDP1CustomView"
+#      name: "{{wf_prefix}}-greenplum-REPL"
+#      params:
+#        - *wfDefaultParams
+#        - *wfDefaultParam__DL_D
+#        - *wfMartParams
+#        - param:
+#            name: "description"
+#            prior_value: >-
+#              "{{wf_prefix}}-greenplum-REPL"

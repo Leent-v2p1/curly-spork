@@ -1,0 +1,46 @@
+# Spark default parameters
+[sparkAppDefaultConf]
+spark.sql.autoBroadcastJoinThreshold=524288000
+# Generated parameters
+spark.yarn.executor.memoryOverhead=400
+spark.sql.shuffle.partitions=2
+spark.yarn.maxAppAttempts=1
+spark.class.name=ru.sberbank.bigdata.cloud.rb.internal.sources.common.ctl.statistics.CtlStatisticService
+spark.datamart.class.name=ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.greenplum.BO.BoJeSecurity
+spark.source.schema=custom_rb_greenplum
+spark.result.schema=custom_rb_bo
+spark.result.table=v_is0121_bo_je_security_h
+spark.ctl.entity.id=901411019
+spark.workflow.type=DATAMART
+spark.datamart.parent.table.name=custom_rb_greenplum.v_is0121_bo_je_security_h
+spark.hdpType=sdp
+spark.yarn.access.hadoopFileSystems=hdfs://hdfsgw/
+spark.kerberos.access.hadoopFileSystems=hdfs://hdfsgw/
+spark.hadoop.yarn.timeline-service.enabled=false
+spark.sql.hive.convertInsertingPartitionedTable=false
+spark.hadoop.hive.mapred.supports.subdirectories=true
+spark.sql.hive.convertMetastoreCtas=false
+spark.sql.hive.convertMetastoreOrc=false
+spark.sql.legacy.typeCoercion.datetimeToString.enabled=true
+spark.sql.legacy.keepCommandOutputSchema=true
+spark.sql.legacy.parquet.int96RebaseModeInWrite=LEGACY
+spark.sql.warehouse.dir=/apps/spark/warehouse
+# Parameters from ctl
+spark.graphite.carbon.host=
+spark.graphite.carbon.port=$[graphite.carbon.port]
+spark.skipIfBuiltToday=$[skipIfBuiltToday]
+spark.hiveJdbcUrl=$[hiveJdbcUrl]
+spark.principal=$[principal]
+spark.user.name=$[user.name]
+spark.keytabPath=$[keytabPath]
+spark.ctl.url=$[ctl.url]
+spark.ctl.loading.id=$[ctl.loading.id]
+spark.wf.id=$[ctl.wf.id]
+spark.start.time=$[ctl.loading.start]
+spark.properties.path=$[propertiesPath]
+spark.environment=$[environment]
+spark.recovery.date=$[recoveryDate]
+spark.custom.build.date=$[custom.build.date]
+spark.start_dt=$[start_dt]
+# Custom parameters from ctl
+[ctlCustomConf]

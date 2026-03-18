@@ -1,0 +1,29 @@
+<workflow-app name="run-custom-hql-script" xmlns="uri:oozie:workflow:0.4">
+    <credentials>
+        <credential name='hive2' type='hive2'>
+            <property>
+                <name>hive2.jdbc.url</name>
+                <value>${hiveJdbcUrl}/</value>
+            </property>
+            <property>
+                <name>hive2.server.principal</name>
+                <value>${principal}</value>
+            </property>
+        </credential>
+    </credentials>
+    <start to="run-hql-script"/>
+    <action name="run-hql-script" cred="hive2">
+        <hive2 xmlns="uri:oozie:hive2-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <jdbc-url>${hiveJdbcUrl}/</jdbc-url>
+            <script>${customHqlScript}</script>
+        </hive2>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

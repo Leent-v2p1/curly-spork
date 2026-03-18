@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<workflow-app name="custom_rb_smartvista.card_transaction" xmlns="uri:oozie:workflow:0.5">
+    <global>
+        <configuration>
+            <property>
+                <name>mapred.job.queue.name</name>
+                <value>${yarnQueue}</value>
+            </property>
+        </configuration>
+    </global>
+    <credentials>
+        <credential name="howlauth" type="hcat">
+            <property>
+                <name>hcat.metastore.uri</name>
+                <value>${hiveMetastoreUri}</value>
+            </property>
+            <property>
+                <name>hcat.metastore.principal</name>
+                <value>${principal}</value>
+            </property>
+        </credential>
+    </credentials>
+    <start to="card_transaction"/>
+    <action name="card_transaction" cred="howlauth">
+        <spark xmlns="uri:oozie:spark-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <master>yarn-cluster</master>
+            <mode>cluster</mode>
+            <name>card_transaction</name>
+            <class>ru.sberbank.bigdata.cloud.rb.internal.sources.datamart.smartvista.CardTransaction</class>
+            <jar>${nameNode}/oozie-app/wf/custom/rb/utils/common/jars/personalization.jar</jar>
+            <spark-opts>
+                --executor-memory 2G
+                --num-executors 50
+                --driver-memory 4G
+                --files ${nameNode}/oozie-app/wf/custom/rb/utils/common/custom-log4j.properties
+                --queue ${yarnQueue}
+                --conf spark.yarn.maxAppAttempts=1
+                --conf "spark.driver.extraJavaOptions=
+                -Dlog4j.configuration=custom-log4j.properties
+                -DhiveJdbcUrl=${hiveJdbcUrl}
+                -Dprincipal=${principal}
+                -Duser.name=${wf:conf('user.name')}
+                -Dhive.metastore.uris=${hiveMetastoreUri}
+                -Dspark.yarn.executor.memoryOverhead=900
+                -Dspark.sql.shuffle.partitions=400
+                -Dspark.yarn.driver.memoryOverhead=1600
+                -Dhive.metastore.sasl.enabled=true
+                -Dctl.url=${ctl}
+                -Dctl.loading.id=${loading_id}
+                -Dctl.build.date='${buildDateSVCardTransaction}'
+                -Dstart.time='${loading_start}'
+                -Dproperties.path=${propertiesPath}
+                -Denvironment=${environment}"
+            </spark-opts>
+        </spark>
+        <ok to="card_transaction_reserve"/>
+        <error to="kill"/>
+    </action>
+    <action name="card_transaction_reserve" cred="howlauth">
+        <spark xmlns="uri:oozie:spark-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <master>yarn-cluster</master>
+            <mode>cluster</mode>
+            <name>card_transaction_reserve</name>
+            <class>ru.sberbank.bigdata.cloud.rb.internal.sources.common.service.reserving.ReservingService</class>
+            <jar>${nameNode}/oozie-app/wf/custom/rb/utils/common/jars/personalization.jar</jar>
+            <spark-opts>
+                --executor-memory 2G
+                --num-executors 1
+                --driver-memory 2G
+                --files ${nameNode}/oozie-app/wf/custom/rb/utils/common/custom-log4j.properties
+                --queue ${yarnQueue}
+                --conf "spark.driver.extraJavaOptions=
+                -Dlog4j.configuration=custom-log4j.properties
+                -Dhive.metastore.uris=${hiveMetastoreUri}
+                -Dspark.yarn.executor.memoryOverhead=400
+                -Dspark.yarn.driver.memoryOverhead=400
+                -Dhive.metastore.sasl.enabled=true
+                -Dctl.url=${ctl}
+                -Dctl.loading.id=${loading_id}
+                -Dresult.schema=custom_rb_smartvista
+                -Dresult.table=card_transaction
+                -Dctl.build.date='${buildDateSVCardTransaction}'
+                -Dproperties.path=${propertiesPath}
+                -Denvironment=${environment}"
+            </spark-opts>
+        </spark>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

@@ -1,0 +1,7 @@
+source_name:
+  table_name:
+    memoryPreset: MID
+    driverMemory: 8G
+    executors: 49
+    executorMemoryOverhead: 901
+    executorCoreNum: 5

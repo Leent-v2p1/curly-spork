@@ -1,0 +1,359 @@
+---
+entities:
+  - entity:
+      id: 901411027
+      name: ft_prod_sales
+      path: /data/custom/rb/greenplum/pa/ft_prod_sales
+      storage:
+      parent-id:
+  - entity:
+      id: 901411026
+      name: ref_sale_channel
+      path: /data/custom/rb/greenplum/pa/ref_sale_channel
+      storage:
+      parent-id:
+  - entity:
+      id: 901411024
+      name: ref_product_class
+      path: /data/custom/rb/greenplum/pa/ref_product_class
+      storage:
+      parent-id:
+  - entity:
+      id: 901411023
+      name: ref_sale_type
+      path: /data/custom/rb/greenplum/pa/ref_sale_type
+      storage:
+      parent-id:
+  - entity:
+      id: 901411001
+      name: v_stg_tk_bb_temp
+      path: /data/custom/rb/greenplum/pa/v_stg_tk_bb_temp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411002
+      name: t_epk_scoring_platform_mod
+      path: /data/custom/rb/greenplum/pa/t_epk_scoring_platform_mod
+      storage:
+      parent-id:
+  - entity:
+      id: 901411004
+      name: evk_campaign_dic
+      path: /data/custom/rb/greenplum/pa/evk_campaign_dic
+      storage:
+      parent-id:
+  - entity:
+      id: 901411005
+      name: evk_campaign_chn
+      path: /data/custom/rb/greenplum/pa/evk_campaign_chn
+      storage:
+      parent-id:
+  - entity:
+      id: 901411006
+      name: evk_campaign_hst
+      path: /data/custom/rb/greenplum/pa/evk_campaign_hst
+      storage:
+      parent-id:
+  - entity:
+      id: 901411008
+      name: v_is0121_dic_agreement
+      path: /data/custom/rb/greenplum/pa/v_is0121_dic_agreement
+      storage:
+      parent-id:
+  - entity:
+      id: 901411011
+      name: v_bo_agrmnt
+      path: /data/custom/rb/greenplum/pa/v_bo_agrmnt
+      storage:
+      parent-id:
+  - entity:
+      id: 901411012
+      name: v_ref_is0121_dic_security_list
+      path: /data/custom/rb/greenplum/pa/v_ref_is0121_dic_security_list
+      storage:
+      parent-id:
+  - entity:
+      id: 901411036
+      name: v_ref_is0121_dic_security_list_full
+      path: /data/custom/rb/greenplum/pa/v_ref_is0121_dic_security_list_full
+      storage:
+      parent-id:
+  - entity:
+      id: 901411038
+      name: ft_parent_features_flags
+      path: /data/custom/rb/greenplum/pa/ft_parent_features_flags
+      storage:
+      parent-id:
+  - entity:
+      id: 901411037
+      name: dm_parent_feature_children
+      path: /data/custom/rb/greenplum/pa/dm_parent_feature_children
+      storage:
+      parent-id:
+  - entity:
+      id: 901411013
+      name: v_is0121_bo_risk_profile
+      path: /data/custom/rb/greenplum/pa/v_is0121_bo_risk_profile
+      storage:
+      parent-id:
+  - entity:
+      id: 901411015
+      name: v_is0121_bo_agrmnt_attr_h
+      path: /data/custom/rb/greenplum/pa/v_is0121_bo_agrmnt_attr_h
+      storage:
+      parent-id:
+  - entity:
+      id: 901411016
+      name: v_bo_asset_bal
+      path: /data/custom/rb/greenplum/pa/v_bo_asset_bal
+      storage:
+      parent-id:
+  - entity:
+      id: 901411017
+      name: v_is0121_bo_je_balance_h
+      path: /data/custom/rb/greenplum/pa/v_is0121_bo_je_balance_h
+      storage:
+      parent-id:
+  - entity:
+      id: 901411018
+      name: v_is0121_bo_je_details_h
+      path: /data/custom/rb/greenplum/pa/v_is0121_bo_je_details_h
+      storage:
+      parent-id:
+  - entity:
+      id: 901411019
+      name: v_is0121_bo_je_security_h
+      path: /data/custom/rb/greenplum/pa/v_is0121_bo_je_security_h
+      storage:
+      parent-id:
+  - entity:
+      id: 901411020
+      name: v_ref_is0121_dic_market_type
+      path: /data/custom/rb/greenplum/pa/v_ref_is0121_dic_market_type
+      storage:
+      parent-id:
+  - entity:
+      id: 901411021
+      name: v_ref_is0121_dic_trans_type
+      path: /data/custom/rb/greenplum/pa/v_ref_is0121_dic_trans_type
+      storage:
+      parent-id:
+  - entity:
+      id: 901411022
+      name: v_bo_balance
+      path: /data/custom/rb/greenplum/pa/v_bo_balance
+      storage:
+      parent-id:
+  - entity:
+      id: 901411028
+      name: v_ref_is0121_dic_tariff
+      path: /data/custom/rb/greenplum/pa/v_ref_is0121_dic_tariff
+      storage:
+      parent-id:
+  - entity:
+      id: 901411033
+      name: t_epk_f_top_up
+      path: /data/custom/rb/greenplum/pa/t_epk_f_top_up
+      storage:
+      parent-id:
+  - entity:
+      id: 901411034
+      name: v_is0481_billing_local_ufo
+      path: /data/custom/rb/greenplum/pa/v_is0481_billing_local_ufo
+      storage:
+      parent-id:
+  - entity:
+      id: 901411035
+      name: dim_ecosys_client_agg_day
+      path: /data/custom/rb/greenplum/pa/dim_ecosys_client_agg_day
+      storage:
+      parent-id:
+  - entity:
+      id: 901411031
+      name: ft_client_aggr_mnth_pnl
+      path: /data/custom/rb/greenplum/pa/ft_client_aggr_mnth_pnl
+      storage:
+      parent-id:
+  - entity:
+      id: 901411039
+      name: da_dic_product_hdp
+      path: /data/custom/rb/greenplum/pa/da_dic_product_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411040
+      name: da_evo_agg_results_hdp
+      path: /data/custom/rb/greenplum/pa/da_evo_agg_results_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411041
+      name: da_evo_camp_2_rules_hdp
+      path: /data/custom/rb/greenplum/pa/da_evo_camp_2_rules_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411042
+      name: da_evo_dic_hdp
+      path: /data/custom/rb/greenplum/pa/da_evo_dic_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411043
+      name: da_evo_dic_sk_hdp
+      path: /data/custom/rb/greenplum/pa/da_evo_dic_sk_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411044
+      name: da_evo_ecosystem_resp_rules_hdp
+      path: /data/custom/rb/greenplum/pa/da_evo_ecosystem_resp_rules_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411045
+      name: da_evo_extra_source_rules_hdp
+      path: /data/custom/rb/greenplum/pa/da_evo_extra_source_rules_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411046
+      name: da_evo_monthly_results_hdp
+      path: /data/custom/rb/greenplum/pa/da_evo_monthly_results_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411054
+      name: da_prdct_rslt_salt_mnth_hdp
+      path: /data/custom/rb/greenplum/pa/da_prdct_rslt_salt_mnth_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411055
+      name: da_prdct_rslt_salt_regular_hdp
+      path: /data/custom/rb/greenplum/pa/da_prdct_rslt_salt_regular_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411047
+      name: da_evo_resp_cln_hdp
+      path: /data/custom/rb/greenplum/pa/da_evo_resp_cln_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411048
+      name: da_evo_resp_cln_month_hdp
+      path: /data/custom/rb/greenplum/pa/da_evo_resp_cln_month_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411049
+      name: da_evo_resp_detail_hdp
+      path: /data/custom/rb/greenplum/pa/da_evo_resp_detail_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411050
+      name: da_evo_resp_rules_hdp
+      path: /data/custom/rb/greenplum/pa/da_evo_resp_rules_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411051
+      name: da_evo_trx_mech_resp_rules_hdp
+      path: /data/custom/rb/greenplum/pa/da_evo_trx_mech_resp_rules_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411052
+      name: da_evo_trx_scg_rules_hdp
+      path: /data/custom/rb/greenplum/pa/da_evo_trx_scg_rules_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411053
+      name: da_evo_universe_tables_hdp
+      path: /data/custom/rb/greenplum/pa/da_evo_universe_tables_hdp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411067
+      name: v_is0188_ekp_dic_product
+      path: /data/custom/rb/greenplum/pa/v_is0188_ekp_dic_product
+      storage:
+      parent-id:
+  - entity:
+      id: 901411074
+      name: dm_union_campaign_hstory_snp
+      path: /data/custom/rb/evk/pa/dm_union_campaign_hstory_snp
+      storage:
+      parent-id:
+  - entity:
+      id: 901411076
+      name: ref_union_campaign_dic_hdp_snp
+      path: /data/custom/rb/evk/pa/ref_union_campaign_dic_hdp_snp
+      storage:
+      parent-id:
+  - entity:
+        id: 901411077
+        name: ref_union_campaign_channel_snp
+        path: /data/custom/rb/evk/pa/ref_union_campaign_channel_snp
+        storage:
+        parent-id:
+  - entity:
+      id: 901411078
+      name: dim_ecosys_dzo_client_agg_day
+      path: /data/custom/rb/greenplum/pa/dim_ecosys_dzo_client_agg_day
+      storage:
+      parent-id:
+  - entity:
+      id: 901411079
+      name: ft_ecosys_txn_det
+      path: /data/custom/rb/greenplum/pa/ft_ecosys_txn_det
+      storage:
+      parent-id:
+  - entity:
+        id: 901411080
+        name: scd_dzo_client_agg_param
+        path: /data/custom/rb/depfin/pa/scd_dzo_client_agg_param
+        storage:
+        parent-id:
+  - entity:
+        id: 901411072
+        name: ft_nba_pkd_flag_flat_act
+        path: /data/custom/rb/greenplum/pa/ft_nba_pkd_flag_flat_act
+        storage:
+        parent-id:
+  - entity:
+      id: 901411081
+      name: v_da_evo_kpi
+      path: /data/custom/rb/greenplum/pa/v_da_evo_kpi
+      storage:
+      parent-id:
+  - entity:
+      id: 901411082
+      name: dm_union_campaign_history_hdp_1
+      path: /data/custom/rb/greenplum/pa/dm_union_campaign_history_hdp_1
+      storage:
+      parent-id:
+
+  - entity:
+      id: 901411083
+      name: dm_union_campaign_history_hdp_2
+      path: /data/custom/rb/greenplum/pa/dm_union_campaign_history_hdp_2
+      storage:
+      parent-id:
+
+  - entity:
+      id: 901411085
+      name: da_repcomm_unq_funnel_navi
+      path: /data/custom/rb/greenplum/pa/da_repcomm_unq_funnel_navi
+      storage:
+      parent-id:
+
+  - entity:
+      id: 901411086
+      name: v_da_evo_kpi_scg
+      path: /data/custom/rb/greenplum/pa/v_da_evo_kpi_scg
+      storage:
+      parent-id:

@@ -1,0 +1,30 @@
+<workflow-app name="run-custom-shell-script" xmlns="uri:oozie:workflow:0.4">
+    <credentials>
+        <credential name='howlauth' type='hcat'>
+            <property>
+                <name>hcat.metastore.uri</name>
+                <value>${hiveMetastoreUri}</value>
+            </property>
+            <property>
+                <name>hcat.metastore.principal</name>
+                <value>${principal}</value>
+            </property>
+        </credential>
+    </credentials>
+    <start to="run-shell-script"/>
+    <action name="run-shell-script">
+        <shell xmlns="uri:oozie:shell-action:0.3">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <exec>custom-script-runner.sh</exec>
+            <argument>${customScript}</argument>
+            <file>${nameNode}/oozie-app/wf/custom/rb/production/utils/custom-shell-script/custom-script-runner.sh</file>
+        </shell>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

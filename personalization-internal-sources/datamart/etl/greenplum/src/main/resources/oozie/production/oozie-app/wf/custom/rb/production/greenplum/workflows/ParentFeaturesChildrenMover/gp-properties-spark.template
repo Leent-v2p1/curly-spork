@@ -1,0 +1,17 @@
+# Generated parameters
+executorMemory=8G
+executorCoreNum=1
+executors=10
+driverMemory=16G
+# Parameters from ctl
+principal=$[principal]
+keytabPath=$[keytabPath]
+gpKeytab=$[gpKeytab]
+gpUser=$[gpUser]
+gpJaas=$[gpJaas]
+partitionColumn=$[partitionColumn]
+queue=$[yarnQueue]
+metastore_uri=$[hiveMetastoreUri]
+user_name=$[user.name]
+# Additional ctl execution parameters
+[ctlExecutionConf]

@@ -1,0 +1,56 @@
+<workflow-app name="masspers-prod-erib-daily-datamarts" xmlns="uri:oozie:workflow:0.4">
+    <global>
+        <configuration>
+            <property>
+                <name>mapred.job.queue.name</name>
+                <value>${yarnQueue}</value>
+            </property>
+        </configuration>
+    </global>
+
+    <start to="validate-ctl-version"/>
+
+    <action name="validate-ctl-version">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/utils/common/validate-ctl-version</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="parallelDatamart"/>
+        <error to="kill"/>
+    </action>
+
+
+    <fork name="parallelDatamart">
+        <path start="create-aggr-fund-sender-responses"/>
+        <path start="create-sbol-device"/>
+    </fork>
+    <join name="joinDatamart" to="decision"/>
+    <decision name="decision">
+        <switch>
+            <case to="kill">${not empty wf:lastErrorNode()}</case>
+            <default to="end"/>
+        </switch>
+    </decision>
+
+    <action name="create-aggr-fund-sender-responses">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-aggr-fund-sender-responses-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinDatamart"/>
+        <error to="joinDatamart"/>
+    </action>
+
+    <action name="create-sbol-device">
+        <sub-workflow>
+            <app-path>/oozie-app/wf/custom/rb/production/erib/generated/create-sbol-device-wf</app-path>
+            <propagate-configuration/>
+        </sub-workflow>
+        <ok to="joinDatamart"/>
+        <error to="joinDatamart"/>
+    </action>
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
