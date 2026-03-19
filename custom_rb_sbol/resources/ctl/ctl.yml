@@ -1,0 +1,437 @@
+templates:
+  entity_hive: &ctlEntityHive    { storage: "HIVE" }
+  wf_info: &wfDefaultInfo
+    {
+      type: principal,
+      orchestrator: oozie,
+      singleLoading: true,
+      profile: "{{global.CTL_PROFILE_NAME}}",
+      link_stats: [ 2, 5, 10, 11, 34 ]
+    }
+  wf_params:
+    - &wfDefaultParam__secman_conf_hdfs_path
+      param: { name: b2c.sql.secman.conf.hdfs.path, prior_value: "{{mart.secman_conf_hdfs_path}}" }
+    - &wfDefaultParam__sber_sql_engine_default
+      param: { name: b2c.sql.engine.default, prior_value: "spark" }
+    - &wfDefaultParam__kibana_app_id
+      param: { name: kibana.app.id, prior_value: "{{mart.kibana_app_id}}" }
+    - &wfDefaultParam__ctl_root_category_name
+      param: { name: ctl.root.category.name, prior_value: "p1030" }
+    - &wfDefaultParam__app_version
+      param: { name: app.version, prior_value: "{{devops.version}}" }
+    - &wfDefaultParam__app_version_oozie
+      param: { name: app_version, prior_value: "{{devops.version}}" }
+    - &wfDefaultParam__app_upload_lastUpdateTime
+      param: { name: app.upload.lastUpdateTime, prior_value: "{{ now() }}" }
+    - &wfDefaultParam__user_name
+      param: { name: user.name, prior_value: "{{mart.USER_NAME}}" }
+    - &wfDefaultParam__mapreduce_job_queuename
+      param: { name: mapreduce.job.queuename, prior_value: "{{mart.YARN_QUEUE}}" }
+    - &wfDefaultParam__sber_sql_conf_path
+      param: { name: b2c.sql.conf.path, prior_value: "{{mart.hdfs_path_app_full}}/conf/external/external.conf" }
+    - &wfDefaultParam__sber_sql_spark_deploy
+      param: { name: b2c.sql.engine.spark.deploy, prior_value: "{{sber_sql_spark_deploy}}" }
+    - &wfDefaultParam__oozie_wf_application_path
+      param: { name: oozie.wf.application.path, prior_value: "hdfs:///oozie-app/b2c/fw/b2c-sql/{{mart.sber_sql_version}}" }
+    - &wfDefaultParam__spark_executor_extraJavaOptions
+      param: { name: b2c.sql.engine.spark.executor.extraJavaOptions, prior_value: "{{mart.spark_executor_extraJavaOptions}}" }
+    - &wfDefaultParam__spark_driver_extraJavaOptions
+      param: { name: b2c.sql.engine.spark.driver.extraJavaOptions, prior_value: "{{mart.spark_driver_extraJavaOptions}}" }
+    - &wfParam-CI
+      param: { name: CI, prior_value: "{{mart.name_official}}" }
+    - &wfParam-DEV_TEAM_EMAIL
+      param: { name: DEV_TEAM_EMAIL , prior_value: "{{mart.notifications_emails}}" }
+    - &wfParam-spark_submit_cmd
+      param: { name: b2c.sql.engine.spark.cmd, prior_value: "${spark_submit_cmd_main} ${spark_submit_cmd_high}" }
+    - &wfParam-sber_sql_logger_log4j2_xml_path
+      param: { name: b2c.sql.logger.log4j2.xml.path, prior_value: "{{devops.datamart_path_app}}/log4j2.xml" }
+    - &wfParam-sber_sql_external_function_path
+      param: { name: b2c.sql.external.function.path, prior_value: "{{devops.datamart_path_app}}/function" }
+    - &wfParam-sber_sql_external_udf_path
+      param: { name: b2c.sql.external.udf.path, prior_value: "{{devops.datamart_path_app}}/udf" }
+    - &wfParam-sber_sql_log_level
+      param: { name: b2c.sql.log.level, prior_value: "info" }
+    - &wfMartParam__src_schema_name
+      param: { name: src_schema_name, prior_value: "{{mart.src_schema_name}}" }
+    - &wfMartParam__parallel_degree
+      param: { name: parallel_degree, prior_value: "1" }
+    - &wfDefaultParams
+      FLATTEN:
+        - *wfDefaultParam__secman_conf_hdfs_path
+        - *wfDefaultParam__sber_sql_engine_default
+        - *wfDefaultParam__kibana_app_id
+        - *wfDefaultParam__ctl_root_category_name
+        - *wfDefaultParam__app_version
+        - *wfDefaultParam__app_version_oozie
+        - *wfDefaultParam__app_upload_lastUpdateTime
+        - *wfDefaultParam__user_name
+        - *wfDefaultParam__mapreduce_job_queuename
+        - *wfDefaultParam__sber_sql_conf_path
+        - *wfDefaultParam__sber_sql_spark_deploy
+        - *wfDefaultParam__oozie_wf_application_path
+        - *wfDefaultParam__spark_executor_extraJavaOptions
+        - *wfDefaultParam__spark_driver_extraJavaOptions
+        - *wfParam-CI
+        - *wfParam-DEV_TEAM_EMAIL
+        - *wfParam-spark_submit_cmd
+        - *wfParam-sber_sql_logger_log4j2_xml_path
+        - *wfParam-sber_sql_external_function_path
+        - *wfParam-sber_sql_external_udf_path
+        - *wfParam-sber_sql_log_level
+    - &wfMartParams
+      FLATTEN:
+        - *wfMartParam__src_schema_name
+        - *wfMartParam__parallel_degree
+    - &notifications_email
+      notifications:
+        - { status: "ERROR", emails: [ "{{mart.notifications_emails}}" ] }
+        - { status: "SUCCESS", emails: [ "{{mart.notifications_emails}}" ] }
+        - { status: "LOCK", emails: [ "{{mart.notifications_emails}}" ] }
+
+entities:
+  - entity: {
+    parent-id: 0,
+    id: 901031001,
+    name: "sbol_logon_aggr",
+    path: "/data/custom/rb/sbol/pa/sbol_logon_aggr",
+    <<: *ctlEntityHive }
+  - entity: {
+    parent-id: 0,
+    id: 901031096,
+    name: "sbol_logon_aggr_for_mega",
+    path: "/data/custom/rb/sbol/pa/sbol_logon_aggr_for_mega",
+    <<: *ctlEntityHive }
+  - entity: {
+    parent-id: 0,
+    id: 901031098,
+    name: "sbol_logon_hist",
+    path: "/data/custom/rb/sbol/pa/sbol_logon_hist",
+    <<: *ctlEntityHive }
+  - entity: {
+    parent-id: 0,
+    id: 901031099,
+    name: "sbol_oper_aggr",
+    path: "/data/custom/rb/sbol/pa/sbol_oper_aggr",
+    <<: *ctlEntityHive }
+  - entity: {
+    parent-id: 0,
+    id: 901031095,
+    name: "sbol_oper_aggr_for_mega",
+    path: "/data/custom/rb/sbol/pa/sbol_oper_aggr_for_mega",
+    <<: *ctlEntityHive }
+  - entity: {
+    parent-id: 0,
+    id: 901031021,
+    name: "sbol_logon_aggr_dt_ikfl",
+    path: "/data/custom/rb/sbol/pa/sbol_logon_aggr_dt_ikfl",
+    <<: *ctlEntityHive }
+  - entity: {
+    parent-id: 0,
+    id: 901031071,
+    name: "sbol_logon_aggr_dt_ikfl2",
+    path: "/data/custom/rb/sbol/pa/sbol_logon_aggr_dt_ikfl2",
+    <<: *ctlEntityHive }
+  - entity: {
+    parent-id: 0,
+    id: 901031121,
+    name: "sbol_logon_aggr_dt_ikfl3",
+    path: "/data/custom/rb/sbol/pa/sbol_logon_aggr_dt_ikfl3",
+    <<: *ctlEntityHive }
+  - entity: {
+    parent-id: 0,
+    id: 901031171,
+    name: "sbol_logon_aggr_dt_ikfl4",
+    path: "/data/custom/rb/sbol/pa/sbol_logon_aggr_dt_ikfl4",
+    <<: *ctlEntityHive }
+  - entity: {
+    parent-id: 0,
+    id: 901031271,
+    name: "sbol_logon_aggr_dt_ikfl5",
+    path: "/data/custom/rb/sbol/pa/sbol_logon_aggr_dt_ikfl5",
+    <<: *ctlEntityHive }
+  - entity: {
+    parent-id: 0,
+    id: 901031221,
+    name: "sbol_logon_aggr_dt_ikfl_gf",
+    path: "/data/custom/rb/sbol/pa/sbol_logon_aggr_dt_ikfl_gf",
+    <<: *ctlEntityHive }
+  - entity: {
+    parent-id: 0,
+    id: 901031321,
+    name: "sbol_logon_aggr_dt_ikfl6",
+    path: "/data/custom/rb/sbol/pa/sbol_logon_aggr_dt_ikfl6",
+    <<: *ctlEntityHive }
+  - entity: {
+    parent-id: 0,
+    id: 901031371,
+    name: "sbol_logon_aggr_dt_ikfl7",
+    path: "/data/custom/rb/sbol/pa/sbol_logon_aggr_dt_ikfl7",
+    <<: *ctlEntityHive }
+
+categories:
+  - category:
+      name: "p1030"
+      deleted: false
+      parent_id: "0"
+  - category:
+      name: "p1030_HDP"
+      deleted: false
+      parent_name: "p1030"
+  - category:
+      name: "MsprsHDP1"
+      deleted: false
+      parent_name: "p1030_HDP"
+  - category:
+      name: "HDDP1CustomView"
+      deleted: false
+      parent_name: "MsprsHDP1"
+
+workflows:
+
+  - sbol_logon_aggr:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-sbol_logon_aggr-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfMartParams
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/sbol_logon_aggr/conf/sbol_logon_aggr.json
+        - param: { name: description, prior_value: "{{wf_prefix}}-sbol_logon_aggr-{{wf_postfix}}" }
+        - param: { name: type, prior_value: 'arc' }
+        - param: { name: start_dt, prior_value: '' }
+        - param: { name: end_dt, prior_value: '' }
+      link_entities: [ 901031001 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+
+  - sbol_logon_aggr_for_mega:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-sbol_logon_aggr_for_mega-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfMartParams
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/sbol_logon_aggr_for_mega/conf/sbol_logon_aggr_for_mega.json
+        - param: { name: description, prior_value: "{{wf_prefix}}-sbol_logon_aggr_for_mega-{{wf_postfix}}" }
+        - param: { name: type, prior_value: 'arc' }
+        - param: { name: start_dt, prior_value: '' }
+        - param: { name: end_dt, prior_value: '' }
+      link_entities: [ 901031096 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+
+  - sbol_logon_hist:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-sbol_logon_hist-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfMartParams
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/sbol_logon_hist/conf/sbol_logon_hist.json
+        - param: { name: description, prior_value: "{{wf_prefix}}-sbol_logon_hist-{{wf_postfix}}" }
+        - param: { name: type, prior_value: 'arc' }
+        - param: { name: start_dt, prior_value: '' }
+        - param: { name: end_dt, prior_value: '' }
+      link_entities: [ 901031098 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+
+  - sbol_oper_aggr:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-sbol_oper_aggr-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfMartParams
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/sbol_oper_aggr/conf/sbol_oper_aggr.json
+        - param: { name: description, prior_value: "{{wf_prefix}}-sbol_oper_aggr-{{wf_postfix}}" }
+        - param: { name: type, prior_value: 'arc' }
+        - param: { name: start_dt, prior_value: '' }
+        - param: { name: end_dt, prior_value: '' }
+      link_entities: [ 901031099 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+
+  - sbol_oper_aggr_for_mega:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-sbol_oper_aggr_for_mega-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfMartParams
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/sbol_oper_aggr_for_mega/conf/sbol_oper_aggr_for_mega.json
+        - param: { name: description, prior_value: "{{wf_prefix}}-sbol_oper_aggr_for_mega-{{wf_postfix}}" }
+        - param: { name: type, prior_value: 'arc' }
+        - param: { name: start_dt, prior_value: '' }
+        - param: { name: end_dt, prior_value: '' }
+      link_entities: [ 901031095 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+
+  - sbol_logon_aggr_dt_ikfl:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfMartParams
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/sbol_logon_aggr_dt_ikfl/conf/sbol_logon_aggr_dt_ikfl.json
+        - param: { name: description, prior_value: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl-{{wf_postfix}}" }
+        - param: { name: type, prior_value: 'inc' }
+        - param: { name: start_dt, prior_value: '' }
+        - param: { name: end_dt, prior_value: '' }
+      link_entities: [ 901031021 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+
+  - sbol_logon_aggr_dt_ikfl2:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl2-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfMartParams
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/sbol_logon_aggr_dt_ikfl2/conf/sbol_logon_aggr_dt_ikfl2.json
+        - param: { name: description, prior_value: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl2-{{wf_postfix}}" }
+        - param: { name: type, prior_value: 'inc' }
+        - param: { name: start_dt, prior_value: '' }
+        - param: { name: end_dt, prior_value: '' }
+      link_entities: [ 901031071 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+
+  - sbol_logon_aggr_dt_ikfl3:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl3-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfMartParams
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/sbol_logon_aggr_dt_ikfl3/conf/sbol_logon_aggr_dt_ikfl3.json
+        - param: { name: description, prior_value: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl3-{{wf_postfix}}" }
+        - param: { name: type, prior_value: 'inc' }
+        - param: { name: start_dt, prior_value: '' }
+        - param: { name: end_dt, prior_value: '' }
+      link_entities: [ 901031121 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+
+  - sbol_logon_aggr_dt_ikfl4:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl4-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfMartParams
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/sbol_logon_aggr_dt_ikfl4/conf/sbol_logon_aggr_dt_ikfl4.json
+        - param: { name: description, prior_value: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl4-{{wf_postfix}}" }
+        - param: { name: type, prior_value: 'inc' }
+        - param: { name: start_dt, prior_value: '' }
+        - param: { name: end_dt, prior_value: '' }
+      link_entities: [ 901031171 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+
+  - sbol_logon_aggr_dt_ikfl5:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl5-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfMartParams
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/sbol_logon_aggr_dt_ikfl5/conf/sbol_logon_aggr_dt_ikfl5.json
+        - param: { name: description, prior_value: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl5-{{wf_postfix}}" }
+        - param: { name: type, prior_value: 'inc' }
+        - param: { name: start_dt, prior_value: '' }
+        - param: { name: end_dt, prior_value: '' }
+      link_entities: [ 901031271 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+
+  - sbol_logon_aggr_dt_ikfl_gf:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl_gf-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfMartParams
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/sbol_logon_aggr_dt_ikfl_gf/conf/sbol_logon_aggr_dt_ikfl_gf.json
+        - param: { name: description, prior_value: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl_gf-{{wf_postfix}}" }
+        - param: { name: type, prior_value: 'inc' }
+        - param: { name: start_dt, prior_value: '' }
+        - param: { name: end_dt, prior_value: '' }
+      link_entities: [ 901031221 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+
+  - sbol_logon_aggr_dt_ikfl6:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl6-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfMartParams
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/sbol_logon_aggr_dt_ikfl6/conf/sbol_logon_aggr_dt_ikfl6.json
+        - param: { name: description, prior_value: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl6-{{wf_postfix}}" }
+        - param: { name: type, prior_value: 'inc' }
+        - param: { name: start_dt, prior_value: '' }
+        - param: { name: end_dt, prior_value: '' }
+      link_entities: [ 901031321 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+
+  - sbol_logon_aggr_dt_ikfl7:
+      <<: *wfDefaultInfo
+      category: "HDDP1CustomView"
+      name: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl7-{{wf_postfix}}"
+      params:
+        - *wfDefaultParams
+        - *wfMartParams
+        - param:
+            name: "b2c.sql.pipelines.config.path"
+            prior_value: >-
+              hdfs:///oozie-app/{{devops.block}}/{{devops.datamart_group}}/{{devops.datamart_name}}/etl/workflows/sbol_logon_aggr_dt_ikfl7/conf/sbol_logon_aggr_dt_ikfl7.json
+        - param: { name: description, prior_value: "{{wf_prefix}}-sbol_logon_aggr_dt_ikfl7-{{wf_postfix}}" }
+        - param: { name: type, prior_value: 'inc' }
+        - param: { name: start_dt, prior_value: '' }
+        - param: { name: end_dt, prior_value: '' }
+      link_entities: [ 901031371 ]
+      link_stats: [ 2, 5, 10, 11, 34 ]
+      <<: *notifications_email
+

@@ -1,0 +1,50 @@
+{
+  "appConfig": {
+    "stages": {
+      "PreStage": {
+        "enabled": "true"
+      },
+      "coalesceFiles": {
+        "enabled": "false"
+      },
+      "backUp": {
+        "enabled": "false"
+      },
+      "moveTable": {
+        "enabled": "false"
+      },
+      "rollBack": {
+        "enabled": "false"
+      },
+      "CdcCalc": {
+        "enabled": "false"
+      },
+      "kafka2hdfs": {
+        "enabled": "false"
+      },
+      "historisity": {
+        "enabled": "false"
+      },
+      "dataQualityCheck": {
+        "enabled": "false"
+      },
+      "hdfs2kafka": {
+        "enabled": "false"
+      }
+    }
+  },
+  "treadConfigs": [
+    {
+      "name": "sbol_logon_aggr_dt_ikfl_gf_thread",
+      "stages": [
+        {
+          "name": "PreStage",
+          "enabled": "true",
+          "config": {
+            "filePath": "hdfs:///oozie-app/b2c/b2c_infra/custom_rb_sbol/etl/workflows/sbol_logon_aggr_dt_ikfl_gf/dml/threads/sbol_logon_aggr_dt_ikfl_gf_thread/sbol_logon_aggr_dt_ikfl_gf_thread.sql"
+          }
+        }
+      ]
+    }
+  ]
+}
