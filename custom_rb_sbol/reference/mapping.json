@@ -1,0 +1,79 @@
+{
+  "mappings": [
+    {
+      "name": "sbol_logon_aggr_dt_ikfl family",
+      "reference": "reference/prototypes/sbol_logon_aggr_dt.reference.sql",
+      "implementation": "etl/workflows/sbol_logon_aggr_dt_ikfl/dml/threads/sbol_logon_aggr_dt_ikfl_thread/sbol_logon_aggr_dt_ikfl_thread.sql",
+      "required_markers": [
+        "sbol_logon_launcher",
+        "date_trunc",
+        "count",
+        "workmode"
+      ],
+      "min_sequence_ratio": 0.35,
+      "min_token_jaccard": 0.12
+    },
+    {
+      "name": "sbol_logon_aggr",
+      "reference": "reference/prototypes/sbol_logon_aggr.reference.sql",
+      "implementation": "etl/workflows/sbol_logon_aggr/dml/threads/sbol_logon_aggr_thread/sbol_logon_aggr_thread.sql",
+      "required_markers": [
+        "sbol_logon_aggr_dt_ikfl",
+        "channel_type_all",
+        "group by",
+        "move_table_to_schema"
+      ],
+      "min_sequence_ratio": 0.45,
+      "min_token_jaccard": 0.18
+    },
+    {
+      "name": "sbol_logon_aggr_for_mega",
+      "reference": "reference/prototypes/sbol_logon_aggr_for_mega.reference.sql",
+      "implementation": "etl/workflows/sbol_logon_aggr_for_mega/dml/threads/sbol_logon_aggr_for_mega_thread/sbol_logon_aggr_for_mega_thread.sql",
+      "required_markers": [
+        "months_between",
+        "preceding",
+        "sbol_3m_login_flag"
+      ],
+      "min_sequence_ratio": 0.35,
+      "min_token_jaccard": 0.12
+    },
+    {
+      "name": "sbol_logon_hist",
+      "reference": "reference/prototypes/sbol_logon_hist.reference.sql",
+      "implementation": "etl/workflows/sbol_logon_hist/dml/threads/sbol_logon_hist_thread/sbol_logon_hist_thread.sql",
+      "required_markers": [
+        "row_number",
+        "left join",
+        "channel_type_norm"
+      ],
+      "min_sequence_ratio": 0.35,
+      "min_token_jaccard": 0.12
+    },
+    {
+      "name": "sbol_oper_aggr",
+      "reference": "reference/prototypes/sbol_oper_aggr.reference.sql",
+      "implementation": "etl/workflows/sbol_oper_aggr/dml/threads/sbol_oper_aggr_thread/sbol_oper_aggr_thread.sql",
+      "required_markers": [
+        "oper_state_code",
+        "login_type",
+        "exec_rub_total",
+        "move_table_to_schema"
+      ],
+      "min_sequence_ratio": 0.35,
+      "min_token_jaccard": 0.12
+    },
+    {
+      "name": "sbol_oper_aggr_for_mega",
+      "reference": "reference/prototypes/sbol_oper_aggr_for_mega.reference.sql",
+      "implementation": "etl/workflows/sbol_oper_aggr_for_mega/dml/threads/sbol_oper_aggr_for_mega_thread/sbol_oper_aggr_for_mega_thread.sql",
+      "required_markers": [
+        "months_between",
+        "preceding",
+        "sbol_txn_main_3m_amt"
+      ],
+      "min_sequence_ratio": 0.35,
+      "min_token_jaccard": 0.12
+    }
+  ]
+}

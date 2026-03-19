@@ -11,3 +11,5 @@
 - `sbol_oper_aggr_for_mega`.
 
 Реализация сохраняет структуру нового фреймворка: `etl/ddl`, `etl/workflows`, `resources/*`.
+
+Дополнительно добавлены эталонные SQL-прототипы в `reference/prototypes` и скрипты сверки в `tools/`, чтобы сравнивать реализацию workflow-thread SQL с эталоном.
